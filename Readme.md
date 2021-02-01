@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алексей Гунчин](https://up.htmlacademy.ru/react/6/user/68098).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений Казаков](https://up.htmlacademy.ru/react/6/user/343981).
 
 ---
 
