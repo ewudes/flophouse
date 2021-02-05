@@ -3,15 +3,15 @@ import Main from '../main/main';
 import PropTypes from 'prop-types';
 
 const App = ({
-  cardCount
+  cards
 }) => {
   return (
-    <Main cardCount={cardCount}/>
+    <Main cards={cards}/>
   );
 };
 
 App.propTypes = {
-  cardCount: PropTypes.number.isRequired
+  cards: PropTypes.array.isRequired
 };
 
 export default App;

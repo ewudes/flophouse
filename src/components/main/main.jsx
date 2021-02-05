@@ -3,7 +3,7 @@ import Card from '../card/card';
 import PropTypes from 'prop-types';
 
 const Main = ({
-  cardCount
+  cards
 }) => {
   return (
     <div className="page page--gray page--main">
@@ -81,15 +81,15 @@ const Main = ({
                     <use xlinkHref={`#icon-arrow-select`}></use>
                   </svg>
                 </span>
-                <ul className="places__options places__options--custom places__options--opened">
+                {/* <ul className="places__options places__options--custom places__options--opened">
                   <li className="places__option places__option--active" tabIndex="0">Popular</li>
                   <li className="places__option" tabIndex="0">Price: low to high</li>
                   <li className="places__option" tabIndex="0">Price: high to low</li>
                   <li className="places__option" tabIndex="0">Top rated first</li>
-                </ul>
+                </ul> */}
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {new Array(cardCount).fill().map((item, i) => <Card key={i} />)}
+                {cards.map((card, index) => <Card {...card} key={index} />)}
               </div>
             </section>
             <div className="cities__right-section">
@@ -103,7 +103,7 @@ const Main = ({
 };
 
 Main.propTypes = {
-  cardCount: PropTypes.number.isRequired
+  cards: PropTypes.array.isRequired
 };
 
 export default Main;
