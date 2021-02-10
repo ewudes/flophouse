@@ -3,6 +3,27 @@ import PropTypes from 'prop-types';
 
 const FACTOR = 20;
 
+const CARD_TYPES = {
+  main: {
+    articleClassName: `cities__place-card`,
+    infoClassName: ``,
+    img: {
+      className: `cities`,
+      width: `260`,
+      height: `200`,
+    },
+  },
+  favorites: {
+    articleClassName: `favorites__card`,
+    infoClassName: `favorites__card-info`,
+    img: {
+      className: `favorites`,
+      width: `150`,
+      height: `110`,
+    }
+  }
+};
+
 const Card = ({
   isPremium,
   isFavorite,
@@ -10,17 +31,20 @@ const Card = ({
   price,
   rating,
   title,
-  type
+  type,
+  cardOption,
 }) => {
+  const cardType = CARD_TYPES[cardOption];
+
   return (
-    <article className="cities__place-card place-card">
+    <article className={`${cardType.articleClassName} place-card`}>
       {isPremium && <div className="place-card__mark"><span>Premium</span></div> || ``}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${cardType.img.className}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={previewImage} width={cardType.img.width} height={cardType.img.height} alt="Place image" />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={`${cardType.infoClassName} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -55,7 +79,8 @@ Card.propTypes = {
   price: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
+  cardOption: PropTypes.string.isRequired,
 };
 
 export default Card;

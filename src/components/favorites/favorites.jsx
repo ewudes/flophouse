@@ -1,8 +1,15 @@
 import React from 'react';
+import Header from '../header/header';
+import Card from '../card/card';
+import PropTypes from 'prop-types';
 
-const Favorites = () => {
+const Favorites = ({
+  cards
+}) => {
   return (
-    <main className="page__main page__main--favorites">
+    <div className="page">
+      <Header />
+      <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
@@ -16,7 +23,8 @@ const Favorites = () => {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  <article className="favorites__card place-card">
+                  {cards.map((card, index) => <Card cardOption="favorites" {...card} key={index} />)}
+                  {/* <article className="favorites__card place-card">
                     <div className="favorites__image-wrapper place-card__image-wrapper">
                       <a href="#">
                         <img className="place-card__image" src="img/apartment-small-03.jpg" width="150" height="110" alt="Place image" />
@@ -46,9 +54,9 @@ const Favorites = () => {
                       </h2>
                       <p className="place-card__type">Apartment</p>
                     </div>
-                  </article>
+                  </article> */}
 
-                  <article className="favorites__card place-card">
+                  {/* <article className="favorites__card place-card">
                     <div className="favorites__image-wrapper place-card__image-wrapper">
                       <a href="#">
                         <img className="place-card__image" src="img/room-small.jpg" width="150" height="110" alt="Place image" />
@@ -78,7 +86,7 @@ const Favorites = () => {
                       </h2>
                       <p className="place-card__type">Private room</p>
                     </div>
-                  </article>
+                  </article> */}
                 </div>
               </li>
 
@@ -91,10 +99,10 @@ const Favorites = () => {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  <article className="favorites__card place-card">
+                  {/* <article className="favorites__card place-card">
                     <div className="favorites__image-wrapper place-card__image-wrapper">
                       <a href="#">
-                        <img className="place-card__image" src={} width="150" height="110" alt="Place image" />
+                        <img className="place-card__image" src="img/apartment-small-04.jpg" width="150" height="110" alt="Place image" />
                       </a>
                     </div>
                     <div className="favorites__card-info place-card__info">
@@ -121,12 +129,24 @@ const Favorites = () => {
                       </h2>
                       <p className="place-card__type">Apartment</p>
                     </div>
-                  </article>
+                  </article> */}
                 </div>
               </li>
             </ul>
           </section>
         </div>
       </main>
-  )
-}
+      <footer className="footer container">
+        <a className="footer__logo-link" href="main.html">
+          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
+        </a>
+      </footer>
+    </div>
+  );
+};
+
+Favorites.propTypes = {
+  cards: PropTypes.array.isRequired
+};
+
+export default Favorites;
