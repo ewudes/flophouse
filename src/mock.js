@@ -7,17 +7,23 @@ export const cards = [
     price: 120,
     rating: 3.0,
     title: `Beautiful & luxurious apartment at great location`,
-    type: `apartament`
+    type: `apartament`,
+    city: {
+      name: `Amsterdam`,
+    }
   },
   {
     id: 2,
     isPremium: false,
-    isFavorite: false,
+    isFavorite: true,
     previewImage: `img/apartment-01.jpg`,
     price: 80,
     rating: 6.0,
     title: `Wood and stone place`,
-    type: `private room`
+    type: `private room`,
+    city: {
+      name: `Cologne`,
+    }
   },
   {
     id: 3,
@@ -27,7 +33,10 @@ export const cards = [
     price: 132,
     rating: 8.0,
     title: `Canal View Prinsengracht`,
-    type: `apartament`
+    type: `apartament`,
+    city: {
+      name: `Cologne`,
+    }
   },
   {
     id: 4,
@@ -37,7 +46,10 @@ export const cards = [
     price: 180,
     rating: 1.0,
     title: `Nice, cozy, warm big bed apartment`,
-    type: `room`
+    type: `room`,
+    city: {
+      name: `Hamburg`,
+    }
   },
   {
     id: 5,
@@ -47,6 +59,9 @@ export const cards = [
     price: 50,
     rating: 4.5,
     title: `Wood and stone place`,
-    type: `apartament`
+    type: `apartament`,
+    city: {
+      name: `Dusseldorf`,
+    }
   },
 ];
