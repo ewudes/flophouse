@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from '../header/header';
-// import Card from '../card/card';
 import PropTypes from 'prop-types';
 import Favorites from '../favorites/favorites';
 

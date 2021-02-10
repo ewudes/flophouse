@@ -10,7 +10,32 @@ export const cards = [
     type: `apartament`,
     city: {
       name: `Amsterdam`,
-    }
+    },
+    images: [
+      `img/apartment-03.jpg`,
+      `img/apartment-02.jpg`,
+      `img/apartment-01.jpg`,
+      `img/apartment-03.jpg`,
+      `img/apartment-02.jpg`,
+      `img/apartment-01.jpg`,
+    ],
+    bedrooms: 3,
+    maxAdults: 8,
+    goods: [
+      `Heating`,
+      `Kitchen`,
+      `Cable TV`,
+      `Washing machine`,
+      `Coffee machine`,
+      `Dishwasher`
+    ],
+    host: {
+      avatarUrl: `img/avatar-angelina.jpg`,
+      id: 3,
+      isPro: true,
+      name: `Angelina`
+    },
+    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
   },
   {
     id: 2,
@@ -23,7 +48,32 @@ export const cards = [
     type: `private room`,
     city: {
       name: `Cologne`,
-    }
+    },
+    images: [
+      `img/apartment-03.jpg`,
+      `img/apartment-02.jpg`,
+      `img/apartment-01.jpg`,
+      `img/apartment-03.jpg`,
+      `img/apartment-02.jpg`,
+      `img/apartment-01.jpg`,
+    ],
+    bedrooms: 3,
+    maxAdults: 8,
+    goods: [
+      `Heating`,
+      `Kitchen`,
+      `Cable TV`,
+      `Washing machine`,
+      `Coffee machine`,
+      `Dishwasher`
+    ],
+    host: {
+      avatarUrl: `img/avatar-angelina.jpg`,
+      id: 3,
+      isPro: true,
+      name: `Angelina`
+    },
+    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
   },
   {
     id: 3,
@@ -36,7 +86,32 @@ export const cards = [
     type: `apartament`,
     city: {
       name: `Cologne`,
-    }
+    },
+    images: [
+      `img/apartment-03.jpg`,
+      `img/apartment-02.jpg`,
+      `img/apartment-01.jpg`,
+      `img/apartment-03.jpg`,
+      `img/apartment-02.jpg`,
+      `img/apartment-01.jpg`,
+    ],
+    bedrooms: 3,
+    maxAdults: 8,
+    goods: [
+      `Heating`,
+      `Kitchen`,
+      `Cable TV`,
+      `Washing machine`,
+      `Coffee machine`,
+      `Dishwasher`
+    ],
+    host: {
+      avatarUrl: `img/avatar-angelina.jpg`,
+      id: 3,
+      isPro: true,
+      name: `Angelina`
+    },
+    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
   },
   {
     id: 4,
@@ -49,7 +124,32 @@ export const cards = [
     type: `room`,
     city: {
       name: `Hamburg`,
-    }
+    },
+    images: [
+      `img/apartment-03.jpg`,
+      `img/apartment-02.jpg`,
+      `img/apartment-01.jpg`,
+      `img/apartment-03.jpg`,
+      `img/apartment-02.jpg`,
+      `img/apartment-01.jpg`,
+    ],
+    bedrooms: 3,
+    maxAdults: 8,
+    goods: [
+      `Heating`,
+      `Kitchen`,
+      `Cable TV`,
+      `Washing machine`,
+      `Coffee machine`,
+      `Dishwasher`
+    ],
+    host: {
+      avatarUrl: `img/avatar-angelina.jpg`,
+      id: 3,
+      isPro: true,
+      name: `Angelina`
+    },
+    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
   },
   {
     id: 5,
@@ -62,6 +162,46 @@ export const cards = [
     type: `apartament`,
     city: {
       name: `Dusseldorf`,
-    }
+    },
+    images: [
+      `img/apartment-03.jpg`,
+      `img/apartment-02.jpg`,
+      `img/apartment-01.jpg`,
+      `img/apartment-03.jpg`,
+      `img/apartment-02.jpg`,
+      `img/apartment-01.jpg`,
+    ],
+    bedrooms: 3,
+    maxAdults: 8,
+    goods: [
+      `Heating`,
+      `Kitchen`,
+      `Cable TV`,
+      `Washing machine`,
+      `Coffee machine`,
+      `Dishwasher`
+    ],
+    host: {
+      avatarUrl: `img/avatar-angelina.jpg`,
+      id: 3,
+      isPro: true,
+      name: `Angelina`
+    },
+    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
   },
+];
+
+export const comments = [
+  {
+    comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+    date: `2019-05-08T14:13:56.569Z`,
+    id: 1,
+    rating: 4,
+    user: {
+      avatarUrl: `img/avatar-max.jpg`,
+      id: 4,
+      isPro: true,
+      name: `Max`,
+    }
+  }
 ];

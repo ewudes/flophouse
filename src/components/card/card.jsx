@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 const FACTOR = 20;
 
@@ -20,7 +21,16 @@ const CARD_TYPES = {
       className: `favorites`,
       width: `150`,
       height: `110`,
-    }
+    },
+  },
+  offer: {
+    articleClassName: `near-places__card`,
+    infoClass: ``,
+    img: {
+      className: `near-places`,
+      width: 260,
+      height: 200,
+    },
   }
 };
 
@@ -33,6 +43,7 @@ const Card = ({
   title,
   type,
   cardOption,
+  id
 }) => {
   const cardType = CARD_TYPES[cardOption];
 
@@ -40,9 +51,9 @@ const Card = ({
     <article className={`${cardType.articleClassName} place-card`}>
       {isPremium && <div className="place-card__mark"><span>Premium</span></div> || ``}
       <div className={`${cardType.img.className}__image-wrapper place-card__image-wrapper`}>
-        <a href="#">
+        <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={previewImage} width={cardType.img.width} height={cardType.img.height} alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className={`${cardType.infoClassName} place-card__info`}>
         <div className="place-card__price-wrapper">
@@ -64,7 +75,7 @@ const Card = ({
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -81,6 +92,7 @@ Card.propTypes = {
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   cardOption: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired
 };
 
 export default Card;

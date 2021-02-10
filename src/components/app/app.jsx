@@ -3,22 +3,27 @@ import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import Main from '../main/main';
 import Login from '../login/login';
-import Favorites from '../favorites/favorites';
+import Favorites from '../favoritesWrap/favoritesWrap';
+import Offer from '../offer/offer';
 
 const App = ({
-  cards
+  cards,
+  comments
 }) => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
-          <Main cards={cards} />
-        </Route>
         <Route exact path="/login">
           <Login />
         </Route>
+        <Route exact path="/offer/:id">
+          <Offer cards={cards} comments={comments} />
+        </Route>
         <Route exact path="/favorites">
           <Favorites cards={cards} />
+        </Route>
+        <Route exact path="/">
+          <Main cards={cards} />
         </Route>
       </Switch>
     </BrowserRouter>
@@ -26,7 +31,8 @@ const App = ({
 };
 
 App.propTypes = {
-  cards: PropTypes.array.isRequired
+  cards: PropTypes.array.isRequired,
+  comments: PropTypes.array.isRequired,
 };
 
 export default App;

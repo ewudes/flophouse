@@ -68,7 +68,7 @@ const Main = ({
                 </ul> */}
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {cards.map((card, index) => <Card cardOption="main" {...card} key={index} />)}
+                {cards.map((card) => <Card cardOption="main" {...card} key={card.id} />)}
               </div>
             </section>
             <div className="cities__right-section">
