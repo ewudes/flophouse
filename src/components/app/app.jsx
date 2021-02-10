@@ -5,6 +5,7 @@ import Main from '../main/main';
 import Login from '../login/login';
 import Favorites from '../favoritesWrap/favoritesWrap';
 import Offer from '../offer/offer';
+import PageNotFound from '../pageNotFound/pageNotFound';
 
 const App = ({
   cards,
@@ -24,6 +25,9 @@ const App = ({
         </Route>
         <Route exact path="/">
           <Main cards={cards} />
+        </Route>
+        <Route>
+          <PageNotFound />
         </Route>
       </Switch>
     </BrowserRouter>
