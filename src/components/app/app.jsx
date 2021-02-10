@@ -1,12 +1,27 @@
 import React from 'react';
-import Main from '../main/main';
 import PropTypes from 'prop-types';
+import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import Main from '../main/main';
+import Login from '../login/login';
+import Favorites from '../favorites/favorites';
 
 const App = ({
   cards
 }) => {
   return (
-    <Main cards={cards}/>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          <Main cards={cards} />
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/favorites">
+          <Favorites cards={cards} />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 };
 
