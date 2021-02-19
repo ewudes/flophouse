@@ -2,8 +2,7 @@ import React from 'react';
 import Header from '../header/header';
 import PropTypes from 'prop-types';
 import Favorites from '../favorites/favorites';
-
-const CITIES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];
+import {CITIES} from '../../const';
 
 const FavoritesWrap = ({
   cards
