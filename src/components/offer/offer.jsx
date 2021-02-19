@@ -6,7 +6,7 @@ import Review from '../review/review';
 
 const FACTOR = 20;
 
-const Offer = ({cards, comments}) => {
+const Offer = ({cards, comments, otherPlaces}) => {
   const {
     images = [],
     isPremium,
@@ -158,7 +158,7 @@ const Offer = ({cards, comments}) => {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {cards.slice(0, 3).map((card) => <Card cardOption="offer" {...card} key={card.id} />)}
+              {otherPlaces.slice(0, 3).map((card) => <Card cardOption="offer" {...card} key={card.id} />)}
             </div>
           </section>
         </div>
@@ -170,6 +170,7 @@ const Offer = ({cards, comments}) => {
 Offer.propTypes = {
   cards: PropTypes.array.isRequired,
   comments: PropTypes.array.isRequired,
+  otherPlaces: PropTypes.array.isRequired
 };
 
 export default Offer;

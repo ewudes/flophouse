@@ -6,6 +6,7 @@ import Login from '../login/login';
 import Favorites from '../favoritesWrap/favoritesWrap';
 import Offer from '../offer/offer';
 import PageNotFound from '../pageNotFound/pageNotFound';
+import {cardProps, commentProps} from '../propTypes/propTypes';
 
 const App = ({
   cards,
@@ -18,7 +19,7 @@ const App = ({
           <Login />
         </Route>
         <Route exact path="/offer/:id">
-          <Offer cards={cards} comments={comments} />
+          <Offer cards={cards} otherPlaces={cards} comments={comments} />
         </Route>
         <Route exact path="/favorites">
           <Favorites cards={cards} />
@@ -35,8 +36,8 @@ const App = ({
 };
 
 App.propTypes = {
-  cards: PropTypes.array.isRequired,
-  comments: PropTypes.array.isRequired,
+  cards: PropTypes.arrayOf(PropTypes.shape(cardProps)).isRequired,
+  comments: PropTypes.arrayOf(PropTypes.shape(commentProps)).isRequired,
 };
 
 export default App;

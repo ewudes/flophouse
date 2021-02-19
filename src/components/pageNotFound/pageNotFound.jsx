@@ -1,8 +1,10 @@
 import React from 'react';
 import Header from '../header/header';
 import {Link} from 'react-router-dom';
+import {CITIES} from '../../const';
 
 const PageNotFound = () => {
+
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -11,36 +13,16 @@ const PageNotFound = () => {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+
+              {CITIES.map((city, index) => {
+                return (
+                  <li className="locations__item" key={index}>
+                    <a className="locations__item-link tabs__item" href={`${city}`}>
+                      <span>{city}</span>
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </section>
         </div>

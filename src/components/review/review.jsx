@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {commentProps} from '../propTypes/propTypes';
 
 const FACTOR = 20;
 
@@ -30,11 +30,6 @@ const Review = ({comment, date, rating, user}) => {
   );
 };
 
-Review.propTypes = {
-  comment: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  rating: PropTypes.number.isRequired,
-  user: PropTypes.object.isRequired
-};
+Review.propTypes = {...commentProps};
 
 export default Review;

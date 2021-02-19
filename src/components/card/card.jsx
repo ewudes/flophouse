@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {cardProps} from '../propTypes/propTypes';
 
 const FACTOR = 20;
 
@@ -83,16 +83,6 @@ const Card = ({
   );
 };
 
-Card.propTypes = {
-  isPremium: PropTypes.bool.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
-  previewImage: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  rating: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  cardOption: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired
-};
+Card.propTypes = {...cardProps};
 
 export default Card;
