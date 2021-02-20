@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import Card from '../card/card';
 import Header from '../header/header';
 import Review from '../review/review';
+import {cardProps, commentProps} from '../propTypes/propTypes';
 
 const FACTOR = 20;
 
-const Offer = ({cards, comments, otherPlaces}) => {
+const Offer = ({card, comments, otherPlaces}) => {
   const {
-    images = [],
+    images,
     isPremium,
     isFavorite,
     title,
@@ -20,7 +21,7 @@ const Offer = ({cards, comments, otherPlaces}) => {
     goods,
     host,
     description,
-  } = cards[0];
+  } = card;
 
   return (
     <div className="page">
@@ -29,7 +30,7 @@ const Offer = ({cards, comments, otherPlaces}) => {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.slice(0, 6).map((image, index) => (
+              {images.map((image, index) => (
                 <div className="property__image-wrapper" key={index}>
                   <img className="property__image" src={image} alt="Photo studio" />
                 </div>
@@ -158,7 +159,7 @@ const Offer = ({cards, comments, otherPlaces}) => {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {otherPlaces.slice(0, 3).map((card) => <Card cardOption="offer" {...card} key={card.id} />)}
+              {otherPlaces.slice(0, 3).map((place) => <Card cardOption="offer" {...place} key={place.id} />)}
             </div>
           </section>
         </div>
@@ -168,9 +169,9 @@ const Offer = ({cards, comments, otherPlaces}) => {
 };
 
 Offer.propTypes = {
-  cards: PropTypes.array.isRequired,
-  comments: PropTypes.array.isRequired,
-  otherPlaces: PropTypes.array.isRequired
+  card: PropTypes.arrayOf(PropTypes.shape(cardProps)).isRequired,
+  comments: PropTypes.arrayOf(PropTypes.shape(commentProps)).isRequired,
+  otherPlaces: PropTypes.arrayOf(PropTypes.shape(cardProps)).isRequired,
 };
 
 export default Offer;

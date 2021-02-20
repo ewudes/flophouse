@@ -12,6 +12,7 @@ const App = ({
   cards,
   comments
 }) => {
+
   return (
     <BrowserRouter>
       <Switch>
@@ -19,7 +20,7 @@ const App = ({
           <Login />
         </Route>
         <Route exact path="/offer/:id">
-          <Offer cards={cards} otherPlaces={cards} comments={comments} />
+          <Offer card={cards[0]} otherPlaces={cards} comments={comments} />
         </Route>
         <Route exact path="/favorites">
           <Favorites cards={cards} />

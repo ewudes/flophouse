@@ -3,6 +3,7 @@ import Header from '../header/header';
 import PropTypes from 'prop-types';
 import Favorites from '../favorites/favorites';
 import {CITIES} from '../../const';
+import {cardProps} from '../propTypes/propTypes';
 
 const FavoritesWrap = ({
   cards
@@ -35,7 +36,7 @@ const FavoritesWrap = ({
 };
 
 FavoritesWrap.propTypes = {
-  cards: PropTypes.array.isRequired
+  cards: PropTypes.arrayOf(PropTypes.shape(cardProps)).isRequired,
 };
 
 export default FavoritesWrap;

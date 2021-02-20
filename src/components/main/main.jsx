@@ -2,6 +2,7 @@ import React from 'react';
 import Card from '../card/card';
 import PropTypes from 'prop-types';
 import Header from '../header/header';
+import {cardProps} from '../propTypes/propTypes';
 
 const Main = ({
   cards
@@ -82,7 +83,7 @@ const Main = ({
 };
 
 Main.propTypes = {
-  cards: PropTypes.array.isRequired
+  cards: PropTypes.arrayOf(PropTypes.shape(cardProps)).isRequired,
 };
 
 export default Main;
