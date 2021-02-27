@@ -3,10 +3,10 @@ import Header from '../header/header';
 import PropTypes from 'prop-types';
 import Favorites from '../favorites/favorites';
 import {CITIES} from '../../const';
-import {cardProps} from '../propTypes/propTypes';
+import {offerProps} from '../propTypes/propTypes';
 
 const FavoritesWrap = ({
-  cards
+  offers
 }) => {
   return (
     <div className="page">
@@ -18,7 +18,7 @@ const FavoritesWrap = ({
             <ul className="favorites__list">
 
               {CITIES.map((city, index) => {
-                const filtered = cards.filter((card) => card.city.name === city && card.isFavorite);
+                const filtered = offers.filter((card) => card.city.name === city && card.isFavorite);
                 return filtered.length < 1 ? `` : <Favorites city={city} cards={filtered} key={index} />;
               })}
 
@@ -36,7 +36,7 @@ const FavoritesWrap = ({
 };
 
 FavoritesWrap.propTypes = {
-  cards: PropTypes.arrayOf(PropTypes.shape(cardProps)).isRequired,
+  offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
 };
 
 export default FavoritesWrap;

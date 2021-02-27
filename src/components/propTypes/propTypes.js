@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const cardProps = {
+export const offerProps = {
   isPremium: PropTypes.bool.isRequired,
   isFavorite: PropTypes.bool.isRequired,
   previewImage: PropTypes.string.isRequired,
@@ -12,7 +12,7 @@ export const cardProps = {
   id: PropTypes.number.isRequired
 };
 
-export const commentProps = {
+export const reviewProps = {
   comment: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,

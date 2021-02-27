@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import Card from '../card/card';
 import Header from '../header/header';
 import Review from '../review/review';
-import {cardProps, commentProps} from '../propTypes/propTypes';
+import {offerProps, reviewProps} from '../propTypes/propTypes';
 
 const FACTOR = 20;
 
-const Offer = ({card, comments, otherPlaces}) => {
+const Offer = ({offer, reviews, otherPlaces}) => {
   const {
     images,
     isPremium,
@@ -21,7 +21,7 @@ const Offer = ({card, comments, otherPlaces}) => {
     goods,
     host,
     description,
-  } = card;
+  } = offer;
 
   return (
     <div className="page">
@@ -102,7 +102,7 @@ const Offer = ({card, comments, otherPlaces}) => {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
                 <ul className="reviews__list">
-                  {comments.map((comment) => <Review {...comment} key={comment.id} />)}
+                  {reviews.map((comment) => <Review {...comment} key={comment.id} />)}
                 </ul>
                 <form className="reviews__form form" action="#" method="post">
                   <label className="reviews__label form__label" htmlFor="review">Your review</label>
@@ -169,9 +169,9 @@ const Offer = ({card, comments, otherPlaces}) => {
 };
 
 Offer.propTypes = {
-  card: PropTypes.arrayOf(PropTypes.shape(cardProps)).isRequired,
-  comments: PropTypes.arrayOf(PropTypes.shape(commentProps)).isRequired,
-  otherPlaces: PropTypes.arrayOf(PropTypes.shape(cardProps)).isRequired,
+  offer: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
+  otherPlaces: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
 };
 
 export default Offer;

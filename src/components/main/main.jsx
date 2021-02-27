@@ -2,10 +2,10 @@ import React from 'react';
 import Card from '../card/card';
 import PropTypes from 'prop-types';
 import Header from '../header/header';
-import {cardProps} from '../propTypes/propTypes';
+import {offerProps} from '../propTypes/propTypes';
 
 const Main = ({
-  cards
+  offers
 }) => {
   return (
     <div className="page page--gray page--main">
@@ -69,7 +69,7 @@ const Main = ({
                 </ul> */}
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {cards.map((card) => <Card cardOption="main" {...card} key={card.id} />)}
+                {offers.map((card) => <Card cardOption="main" {...card} key={card.id} />)}
               </div>
             </section>
             <div className="cities__right-section">
@@ -83,7 +83,7 @@ const Main = ({
 };
 
 Main.propTypes = {
-  cards: PropTypes.arrayOf(PropTypes.shape(cardProps)).isRequired,
+  offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
 };
 
 export default Main;

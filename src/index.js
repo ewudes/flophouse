@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import {cards, comments} from './mock';
+import {offers} from './mocks/offers';
+import {reviews} from './mocks/reviews';
 
 ReactDOM.render(
-    <App cards={cards} comments={comments} />, document.querySelector(`#root`)
+    <App offers={offers} reviews={reviews} />, document.querySelector(`#root`)
 );
