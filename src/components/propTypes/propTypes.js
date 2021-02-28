@@ -11,6 +11,11 @@ export const offerProps = {
   cardOption: PropTypes.string,
   id: PropTypes.number.isRequired,
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
+  city: PropTypes.objectOf(PropTypes.string).isRequired,
+  bedrooms: PropTypes.number.isRequired,
+  maxAdults: PropTypes.number.isRequired,
+  goods: PropTypes.arrayOf(PropTypes.string).isRequired,
+  description: PropTypes.string.isRequired
 };
 
 export const reviewProps = {

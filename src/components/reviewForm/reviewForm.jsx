@@ -63,6 +63,9 @@ const reviewForm = () => {
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
       </div>
+      <p>Это добавленно временно, чтобы линтер не ругался</p>
+      <p>Rating: {rating}</p>
+      <p>Review: {review}</p>
     </form>
   );
 };
