@@ -9,7 +9,8 @@ export const offerProps = {
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   cardOption: PropTypes.string,
-  id: PropTypes.number.isRequired
+  id: PropTypes.number.isRequired,
+  images: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export const reviewProps = {

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Redirect, useHistory} from 'react-router-dom';
 import Card from '../card/card';
 import Header from '../header/header';
 import Review from '../review/review';
@@ -7,7 +8,27 @@ import {offerProps, reviewProps} from '../propTypes/propTypes';
 
 const FACTOR = 20;
 
-const Offer = ({offer, reviews, otherPlaces}) => {
+const getCurrentOffer = (id, offers) => {
+  let offer;
+  offers.forEach(function (item) {
+    if (Number(id) === item.id) {
+      offer = item;
+    }
+  });
+
+  return offer;
+};
+
+const Offer = ({offers, reviews, otherPlaces}) => {
+  const path = useHistory().location.pathname;
+  const id = path.slice(path.indexOf(`:`));
+
+  const offer = getCurrentOffer(id, offers);
+
+  if (!offer) {
+    return <Redirect to="/404" />;
+  }
+
   const {
     images,
     isPremium,
@@ -169,7 +190,7 @@ const Offer = ({offer, reviews, otherPlaces}) => {
 };
 
 Offer.propTypes = {
-  offer: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
+  offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
   otherPlaces: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
 };

@@ -19,7 +19,7 @@ const FavoritesWrap = ({
 
               {CITIES.map((city, index) => {
                 const filtered = offers.filter((card) => card.city.name === city && card.isFavorite);
-                return filtered.length < 1 ? `` : <Favorites city={city} cards={filtered} key={index} />;
+                return filtered.length < 1 ? `` : <Favorites city={city} offers={filtered} key={index} />;
               })}
 
             </ul>
