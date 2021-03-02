@@ -6,11 +6,11 @@ import Login from '../login/login';
 import Favorites from '../favoritesWrap/favoritesWrap';
 import Offer from '../offer/offer';
 import PageNotFound from '../pageNotFound/pageNotFound';
-import {cardProps, commentProps} from '../propTypes/propTypes';
+import {offerProps, reviewProps} from '../propTypes/propTypes';
 
 const App = ({
-  cards,
-  comments
+  offers,
+  reviews
 }) => {
 
   return (
@@ -19,14 +19,15 @@ const App = ({
         <Route exact path="/login">
           <Login />
         </Route>
-        <Route exact path="/offer/:id">
-          <Offer card={cards[0]} otherPlaces={cards} comments={comments} />
+        <Route exact path="/offer/:id"
+          render={(props) => <Offer offers={offers} otherPlaces={offers} reviews={reviews} {...props} />}
+        >
         </Route>
         <Route exact path="/favorites">
-          <Favorites cards={cards} />
+          <Favorites offers={offers} />
         </Route>
         <Route exact path="/">
-          <Main cards={cards} />
+          <Main offers={offers} />
         </Route>
         <Route>
           <PageNotFound />
@@ -37,8 +38,8 @@ const App = ({
 };
 
 App.propTypes = {
-  cards: PropTypes.arrayOf(PropTypes.shape(cardProps)).isRequired,
-  comments: PropTypes.arrayOf(PropTypes.shape(commentProps)).isRequired,
+  offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
 };
 
 export default App;

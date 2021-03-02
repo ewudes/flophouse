@@ -1,5 +1,5 @@
 import React from 'react';
-import {commentProps} from '../propTypes/propTypes';
+import {reviewProps} from '../propTypes/propTypes';
 
 const FACTOR = 20;
 
@@ -30,6 +30,6 @@ const Review = ({comment, date, rating, user}) => {
   );
 };
 
-Review.propTypes = {...commentProps};
+Review.propTypes = {...reviewProps};
 
 export default Review;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {cardProps} from '../propTypes/propTypes';
+import {offerProps} from '../propTypes/propTypes';
 
 const FACTOR = 20;
 
@@ -83,6 +83,6 @@ const Card = ({
   );
 };
 
-Card.propTypes = {...cardProps};
+Card.propTypes = {...offerProps};
 
 export default Card;

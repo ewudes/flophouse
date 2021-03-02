@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Card from '../card/card';
-import {cardProps} from '../propTypes/propTypes';
+import {offerProps} from '../propTypes/propTypes';
 
-const Favorites = ({city, cards}) => {
+const Favorites = ({city, offers}) => {
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
@@ -14,7 +14,7 @@ const Favorites = ({city, cards}) => {
         </div>
       </div>
       <div className="favorites__places">
-        {cards.map((card) => <Card cardOption="favorites" {...card} key={card.id} />)}
+        {offers.map((offer) => <Card cardOption="favorites" {...offer} key={offer.id} />)}
       </div>
     </li>
   );
@@ -22,7 +22,7 @@ const Favorites = ({city, cards}) => {
 
 Favorites.propTypes = {
   city: PropTypes.string.isRequired,
-  cards: PropTypes.arrayOf(PropTypes.shape(cardProps)).isRequired,
+  offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
 };
 
 export default Favorites;
