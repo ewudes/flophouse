@@ -19,8 +19,9 @@ const App = ({
         <Route exact path="/login">
           <Login />
         </Route>
-        <Route exact path="/offer/:id">
-          <Offer offers={offers} otherPlaces={offers} reviews={reviews} />
+        <Route exact path="/offer/:id"
+          render={(props) => <Offer offers={offers} otherPlaces={offers} reviews={reviews} {...props} />}
+        >
         </Route>
         <Route exact path="/favorites">
           <Favorites offers={offers} />

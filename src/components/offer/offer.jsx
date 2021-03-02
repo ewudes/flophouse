@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import {Redirect, useHistory} from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 import Card from '../card/card';
 import Header from '../header/header';
 import Review from '../review/review';
@@ -9,24 +9,12 @@ import {offerProps, reviewProps} from '../propTypes/propTypes';
 
 const FACTOR = 20;
 
-const getCurrentOffer = (id, offers) => {
-  let offer;
-  offers.forEach(function (item) {
-    if (Number(id) === item.id) {
-      offer = item;
-    }
-  });
+const getCurrentOffer = (id, offers) => offers.find((item) => Number(id) === item.id);
 
-  return offer;
-};
+const Offer = ({offers, reviews, otherPlaces, ...props}) => {
+  const id = props.match.params.id;
 
-const Offer = ({offers, reviews, otherPlaces}) => {
-  const path = useHistory().location.pathname;
-  const id = path.slice(path.indexOf(`:`));
-
-  const currentOffer = getCurrentOffer(id, offers);
-
-  const [offer] = useState(currentOffer);
+  const offer = getCurrentOffer(id, offers);
 
   if (!offer) {
     return <Redirect to="/404" />;
@@ -151,6 +139,12 @@ Offer.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
   otherPlaces: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      experiment: PropTypes.string,
+      id: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
-export default Offer;
+export default withRouter(Offer);
