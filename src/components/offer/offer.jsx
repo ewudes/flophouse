@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Redirect, withRouter} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import Card from '../card/card';
 import Header from '../header/header';
 import Review from '../review/review';
@@ -147,4 +147,4 @@ Offer.propTypes = {
   }).isRequired,
 };
 
-export default withRouter(Offer);
+export default Offer;
