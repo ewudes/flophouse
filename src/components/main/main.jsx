@@ -3,10 +3,12 @@ import Card from '../card/card';
 import PropTypes from 'prop-types';
 import Header from '../header/header';
 import {offerProps} from '../propTypes/propTypes';
+import Map from '../map/map';
 
 const Main = ({
   offers
 }) => {
+
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -73,7 +75,12 @@ const Main = ({
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map
+                  points={offers}
+                  city={offers[0].city.location}
+                />
+              </section>
             </div>
           </div>
         </div>
