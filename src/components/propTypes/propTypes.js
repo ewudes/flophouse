@@ -11,7 +11,14 @@ export const offerProps = {
   cardOption: PropTypes.string,
   id: PropTypes.number.isRequired,
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
-  city: PropTypes.objectOf(PropTypes.string).isRequired,
+  city: PropTypes.shape({
+    location: PropTypes.shape({
+      latitude: PropTypes.number.isRequired,
+      longitude: PropTypes.number.isRequired,
+      zoom: PropTypes.number.isRequired,
+    }),
+    name: PropTypes.string.isRequired,
+  }),
   bedrooms: PropTypes.number.isRequired,
   maxAdults: PropTypes.number.isRequired,
   goods: PropTypes.arrayOf(PropTypes.string).isRequired,
