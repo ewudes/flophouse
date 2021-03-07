@@ -17,7 +17,8 @@ const Map = ({points, cityLocation}) => {
         lat: cityLocation.latitude,
         lng: cityLocation.longitude
       },
-      zoom: cityLocation.zoom
+      zoom: cityLocation.zoom,
+      scrollWheelZoom: false
     });
 
     leaflet
