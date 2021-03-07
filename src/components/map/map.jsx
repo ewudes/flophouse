@@ -8,16 +8,16 @@ const STYLE = {
   height: `100%`
 };
 
-const Map = ({points, city}) => {
+const Map = ({points, cityLocation}) => {
   const mapRef = useRef();
 
   useEffect(() => {
     mapRef.current = leaflet.map(`map`, {
       center: {
-        lat: city.latitude,
-        lng: city.longitude
+        lat: cityLocation.latitude,
+        lng: cityLocation.longitude
       },
-      zoom: city.zoom
+      zoom: cityLocation.zoom
     });
 
     leaflet
@@ -41,11 +41,11 @@ const Map = ({points, city}) => {
       })
       .addTo(mapRef.current)
       .bindPopup(point.title);
-
-      return () => {
-        mapRef.current.remove();
-      };
     });
+
+    return () => {
+      mapRef.current.remove();
+    };
   }, []);
 
   return (
@@ -54,7 +54,7 @@ const Map = ({points, city}) => {
 };
 
 Map.propTypes = {
-  city: PropTypes.shape({
+  cityLocation: PropTypes.shape({
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
     zoom: PropTypes.number.isRequired,

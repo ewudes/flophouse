@@ -78,7 +78,7 @@ const Main = ({
               <section className="cities__map map">
                 <Map
                   points={offers}
-                  city={offers[0].city.location}
+                  cityLocation={offers[0].city.location}
                 />
               </section>
             </div>
