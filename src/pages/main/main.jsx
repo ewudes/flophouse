@@ -2,7 +2,7 @@ import React from 'react';
 import Card from '../../components/card/card';
 import PropTypes from 'prop-types';
 import Header from '../../components/header/header';
-import {offerProps} from '../../components/propTypes/propTypes';
+import {offerProps} from '../../components/prop-types/prop-types';
 import Map from '../../components/map/map';
 
 const Main = ({

@@ -1,5 +1,5 @@
 import React from 'react';
-import {reviewProps} from '../propTypes/propTypes';
+import {reviewProps} from '../prop-types/prop-types';
 
 const FACTOR = 20;
 

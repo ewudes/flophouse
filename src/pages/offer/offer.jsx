@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import Header from '../../components/header/header';
-import ReviewList from '../../components/reviewsList/reviewsList';
-import ReviewForm from '../../components/reviewForm/reviewForm';
-import NearPlaces from '../../components/nearPlacesList/nearPlacesList';
-import {offerProps, reviewProps} from '../../components/propTypes/propTypes';
+import ReviewList from '../../components/reviews-list/reviews-list';
+import ReviewForm from '../../components/review-form/review-form';
+import NearPlaces from '../../components/near-places-list/near-places-list';
+import {offerProps, reviewProps} from '../../components/prop-types/prop-types';
 import Map from '../../components/map/map';
 
 const FACTOR = 20;

@@ -5,8 +5,8 @@ import Main from '../../pages/main/main';
 import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';
 import Offer from '../../pages/offer/offer';
-import PageNotFound from '../../pages/notFound/notFound';
-import {offerProps, reviewProps} from '../propTypes/propTypes';
+import PageNotFound from '../../pages/not-found/not-found';
+import {offerProps, reviewProps} from '../prop-types/prop-types';
 
 const App = ({
   offers,

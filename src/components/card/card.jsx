@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {offerProps} from '../propTypes/propTypes';
+import {offerProps} from '../prop-types/prop-types';
 
 const FACTOR = 20;
 

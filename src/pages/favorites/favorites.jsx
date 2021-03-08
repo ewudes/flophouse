@@ -1,9 +1,9 @@
 import React from 'react';
 import Header from '../../components/header/header';
 import PropTypes from 'prop-types';
-import FavoritesItems from '../../components/favoritesItems/favoritesItems';
+import FavoritesItems from '../../components/favorites-items/favorites-items';
 import {CITIES} from '../../const';
-import {offerProps} from '../../components/propTypes/propTypes';
+import {offerProps} from '../../components/prop-types/prop-types';
 
 const Favorites = ({
   offers
