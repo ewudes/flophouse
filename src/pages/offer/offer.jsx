@@ -1,20 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
-import Card from '../card/card';
-import Header from '../header/header';
-import Review from '../review/review';
-import ReviewForm from '../reviewForm/reviewForm';
-import {offerProps, reviewProps} from '../propTypes/propTypes';
+import Header from '../../components/header/header';
+import ReviewList from '../../components/reviews-list/reviews-list';
+import ReviewForm from '../../components/review-form/review-form';
+import NearPlaces from '../../components/near-places-list/near-places-list';
+import {offerProps, reviewProps} from '../../components/prop-types/prop-types';
+import Map from '../../components/map/map';
 
 const FACTOR = 20;
 
 const getCurrentOffer = (id, offers) => offers.find((item) => Number(id) === item.id);
 
-const Offer = ({offers, reviews, otherPlaces, ...props}) => {
+const Offer = ({offers, reviews, nearPlaces, ...props}) => {
   const id = props.match.params.id;
-
   const offer = getCurrentOffer(id, offers);
+
+  const setNearPlaces = (places, count) => places.slice(0, count);
 
   if (!offer) {
     return <Redirect to="/404" />;
@@ -112,22 +114,25 @@ const Offer = ({offers, reviews, otherPlaces, ...props}) => {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  {reviews.map((comment) => <Review {...comment} key={comment.id} />)}
-                </ul>
+                <ReviewList
+                  reviews={reviews}
+                />
                 <ReviewForm/>
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map
+              points={setNearPlaces(nearPlaces, 3)}
+              cityLocation={nearPlaces[0].city.location}
+            />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              {otherPlaces.slice(0, 3).map((place) => <Card cardOption="offer" {...place} key={place.id} />)}
-            </div>
+            <NearPlaces
+              nearPlaces={setNearPlaces(nearPlaces, 3)}
+            />
           </section>
         </div>
       </main>
@@ -138,7 +143,7 @@ const Offer = ({offers, reviews, otherPlaces, ...props}) => {
 Offer.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
-  otherPlaces: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
+  nearPlaces: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       experiment: PropTypes.string,

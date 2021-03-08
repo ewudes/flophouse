@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
-import Main from '../main/main';
-import Login from '../login/login';
-import Favorites from '../favoritesWrap/favoritesWrap';
-import Offer from '../offer/offer';
-import PageNotFound from '../pageNotFound/pageNotFound';
-import {offerProps, reviewProps} from '../propTypes/propTypes';
+import Main from '../../pages/main/main';
+import Login from '../../pages/login/login';
+import Favorites from '../../pages/favorites/favorites';
+import Offer from '../../pages/offer/offer';
+import PageNotFound from '../../pages/not-found/not-found';
+import {offerProps, reviewProps} from '../prop-types/prop-types';
 
 const App = ({
   offers,
@@ -20,7 +20,7 @@ const App = ({
           <Login />
         </Route>
         <Route exact path="/offer/:id"
-          render={(props) => <Offer offers={offers} otherPlaces={offers} reviews={reviews} {...props} />}
+          render={(props) => <Offer offers={offers} nearPlaces={offers} reviews={reviews} {...props} />}
         >
         </Route>
         <Route exact path="/favorites">

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Card from '../card/card';
-import {offerProps} from '../propTypes/propTypes';
+import {offerProps} from '../prop-types/prop-types';
 
-const Favorites = ({city, offers}) => {
+const FavoritesItems = ({city, offers}) => {
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
@@ -20,9 +20,9 @@ const Favorites = ({city, offers}) => {
   );
 };
 
-Favorites.propTypes = {
+FavoritesItems.propTypes = {
   city: PropTypes.string.isRequired,
   offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
 };
 
-export default Favorites;
+export default FavoritesItems;
