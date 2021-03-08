@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Card from '../card/card';
+import {offerProps} from '../prop-types/prop-types';
 
 const NearPlacesList = ({nearPlaces}) => {
   return (
@@ -10,6 +12,10 @@ const NearPlacesList = ({nearPlaces}) => {
       </div>
     </>
   );
+};
+
+NearPlacesList.propTypes = {
+  nearPlaces: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
 };
 
 export default NearPlacesList;
