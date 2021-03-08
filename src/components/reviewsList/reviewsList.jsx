@@ -3,7 +3,7 @@ import Review from '../reviewItem/reviewItem';
 import PropTypes from 'prop-types';
 import {reviewProps} from '../propTypes/propTypes';
 
-const reviewWrap = ({reviews}) => {
+const ReviewsList = ({reviews}) => {
   return (
     <>
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
@@ -14,8 +14,8 @@ const reviewWrap = ({reviews}) => {
   );
 };
 
-reviewWrap.propTypes = {
+ReviewsList.propTypes = {
   reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
 };
 
-export default reviewWrap;
+export default ReviewsList;

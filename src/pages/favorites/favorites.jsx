@@ -1,11 +1,11 @@
 import React from 'react';
 import Header from '../../components/header/header';
 import PropTypes from 'prop-types';
-import Favorites from '../../components/favoritesItems/favoritesItems';
+import FavoritesItems from '../../components/favoritesItems/favoritesItems';
 import {CITIES} from '../../const';
 import {offerProps} from '../../components/propTypes/propTypes';
 
-const FavoritesWrap = ({
+const Favorites = ({
   offers
 }) => {
   return (
@@ -19,7 +19,7 @@ const FavoritesWrap = ({
 
               {CITIES.map((city, index) => {
                 const filtered = offers.filter((card) => card.city.name === city && card.isFavorite);
-                return filtered.length < 1 ? `` : <Favorites city={city} offers={filtered} key={index} />;
+                return filtered.length < 1 ? `` : <FavoritesItems city={city} offers={filtered} key={index} />;
               })}
 
             </ul>
@@ -35,8 +35,8 @@ const FavoritesWrap = ({
   );
 };
 
-FavoritesWrap.propTypes = {
+Favorites.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
 };
 
-export default FavoritesWrap;
+export default Favorites;

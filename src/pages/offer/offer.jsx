@@ -12,10 +12,8 @@ const FACTOR = 20;
 
 const getCurrentOffer = (id, offers) => offers.find((item) => Number(id) === item.id);
 
-
 const Offer = ({offers, reviews, nearPlaces, ...props}) => {
   const id = props.match.params.id;
-
   const offer = getCurrentOffer(id, offers);
 
   const setNearPlaces = (places, count) => places.slice(0, count);

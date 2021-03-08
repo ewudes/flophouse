@@ -3,7 +3,7 @@ import {reviewProps} from '../propTypes/propTypes';
 
 const FACTOR = 20;
 
-const Review = ({comment, date, rating, user}) => {
+const ReviewItem = ({comment, date, rating, user}) => {
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -30,6 +30,6 @@ const Review = ({comment, date, rating, user}) => {
   );
 };
 
-Review.propTypes = {...reviewProps};
+ReviewItem.propTypes = {...reviewProps};
 
-export default Review;
+export default ReviewItem;

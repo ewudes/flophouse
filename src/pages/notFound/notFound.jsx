@@ -3,7 +3,7 @@ import Header from '../../components/header/header';
 import {Link} from 'react-router-dom';
 import {CITIES} from '../../const';
 
-const PageNotFound = () => {
+const NotFound = () => {
 
   return (
     <div className="page page--gray page--main">
@@ -42,4 +42,4 @@ const PageNotFound = () => {
   );
 };
 
-export default PageNotFound;
+export default NotFound;

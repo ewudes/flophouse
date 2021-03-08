@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '../card/card';
 
-const nearPlacesWrap = ({nearPlaces}) => {
+const NearPlacesList = ({nearPlaces}) => {
   return (
     <>
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
@@ -12,4 +12,4 @@ const nearPlacesWrap = ({nearPlaces}) => {
   );
 };
 
-export default nearPlacesWrap;
+export default NearPlacesList;
