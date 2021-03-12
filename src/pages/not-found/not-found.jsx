@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from '../../components/header/header';
 import {Link} from 'react-router-dom';
-import {CITIES} from '../../const';
 import Locations from '../../components/locations/locations';
 
 const NotFound = () => {
