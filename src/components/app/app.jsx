@@ -9,7 +9,6 @@ import PageNotFound from '../../pages/not-found/not-found';
 import {offerProps, reviewProps} from '../prop-types/prop-types';
 
 const App = ({
-  offers,
   reviews
 }) => {
 
@@ -20,14 +19,14 @@ const App = ({
           <Login />
         </Route>
         <Route exact path="/offer/:id"
-          render={(props) => <Offer offers={offers} nearPlaces={offers} reviews={reviews} {...props} />}
+          render={(props) => <Offer reviews={reviews} {...props} />}
         >
         </Route>
         <Route exact path="/favorites">
-          <Favorites offers={offers} />
+          <Favorites />
         </Route>
         <Route exact path="/">
-          <Main offers={offers} />
+          <Main />
         </Route>
         <Route>
           <PageNotFound />

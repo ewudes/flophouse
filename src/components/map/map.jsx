@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
+import {getCurrentOffers} from '../../utils';
 
 import "leaflet/dist/leaflet.css";
 
@@ -8,8 +9,13 @@ const STYLE = {
   height: `100%`
 };
 
-const Map = ({points, cityLocation}) => {
+const Map = ({points, city}) => {
+  const curentOffers = getCurrentOffers(city, points);
+  if (!curentOffers.length) {
+    return ``;
+  }
   const mapRef = useRef();
+  const cityLocation = points[0].city.location;
 
   useEffect(() => {
     mapRef.current = leaflet.map(`map`, {
@@ -47,7 +53,7 @@ const Map = ({points, cityLocation}) => {
     return () => {
       mapRef.current.remove();
     };
-  }, []);
+  }, [city]);
 
   return (
     <div id="map" style={STYLE} ref={mapRef}></div>
@@ -55,16 +61,18 @@ const Map = ({points, cityLocation}) => {
 };
 
 Map.propTypes = {
-  cityLocation: PropTypes.shape({
+  cityLocation: PropTypes.objectOf(PropTypes.shape({
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
     zoom: PropTypes.number.isRequired,
-  }),
+  })),
   points: PropTypes.arrayOf(PropTypes.shape({
     latitude: PropTypes.number,
     longitude: PropTypes.number,
     title: PropTypes.string.isRequired,
-  }))
+    city: PropTypes.objectOf.isRequired,
+  })),
+  city: PropTypes.string.isRequired
 };
 
 export default Map;

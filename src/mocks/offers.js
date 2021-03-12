@@ -14,7 +14,7 @@ export const offers = [
         longitude: 4.895168,
         zoom: 10
       },
-      name: `Amsterdam`,
+      name: `Paris`,
     },
     images: [
       `img/apartment-03.jpg`,

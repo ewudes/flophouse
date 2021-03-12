@@ -7,12 +7,13 @@ import ReviewForm from '../../components/review-form/review-form';
 import NearPlaces from '../../components/near-places-list/near-places-list';
 import {offerProps, reviewProps} from '../../components/prop-types/prop-types';
 import Map from '../../components/map/map';
+import {connect} from "react-redux";
 
 const FACTOR = 20;
 
 const getCurrentOffer = (id, offers) => offers.find((item) => Number(id) === item.id);
 
-const Offer = ({offers, reviews, nearPlaces, ...props}) => {
+const Offer = ({offers, reviews, city, ...props}) => {
   const id = props.match.params.id;
   const offer = getCurrentOffer(id, offers);
 
@@ -123,15 +124,15 @@ const Offer = ({offers, reviews, nearPlaces, ...props}) => {
           </div>
           <section className="property__map map">
             <Map
-              points={setNearPlaces(nearPlaces, 3)}
-              cityLocation={nearPlaces[0].city.location}
+              points={setNearPlaces(offers, 3)}
+              city={city}
             />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <NearPlaces
-              nearPlaces={setNearPlaces(nearPlaces, 3)}
+              nearPlaces={setNearPlaces(offers, 3)}
             />
           </section>
         </div>
@@ -140,10 +141,15 @@ const Offer = ({offers, reviews, nearPlaces, ...props}) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+  city: state.city
+});
+
 Offer.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
-  nearPlaces: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
+  city: PropTypes.string.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       experiment: PropTypes.string,
@@ -152,4 +158,5 @@ Offer.propTypes = {
   }).isRequired,
 };
 
-export default Offer;
+export {Offer};
+export default connect(mapStateToProps, null)(Offer);

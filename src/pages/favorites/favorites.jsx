@@ -2,12 +2,16 @@ import React from 'react';
 import Header from '../../components/header/header';
 import PropTypes from 'prop-types';
 import FavoritesItems from '../../components/favorites-items/favorites-items';
-import {CITIES} from '../../const';
 import {offerProps} from '../../components/prop-types/prop-types';
+import {connect} from 'react-redux';
+import {ActionCreator} from '../../store/action';
 
 const Favorites = ({
   offers
 }) => {
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const cityList = [...new Set(favoriteOffers.map((offer) => offer.city.name))];
+
   return (
     <div className="page">
       <Header />
@@ -17,7 +21,7 @@ const Favorites = ({
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
 
-              {CITIES.map((city, index) => {
+              {cityList.map((city, index) => {
                 const filtered = offers.filter((card) => card.city.name === city && card.isFavorite);
                 return filtered.length < 1 ? `` : <FavoritesItems city={city} offers={filtered} key={index} />;
               })}
@@ -39,4 +43,15 @@ Favorites.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
 };
 
-export default Favorites;
+const mapStateToProps = ({offers}) => ({
+  offers,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeCity(city) {
+    dispatch(ActionCreator.changeCity(city));
+  }
+});
+
+export {Favorites};
+export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
