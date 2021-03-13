@@ -56,11 +56,6 @@ const Map = ({points, city}) => {
 };
 
 Map.propTypes = {
-  cityLocation: PropTypes.objectOf(PropTypes.shape({
-    latitude: PropTypes.number.isRequired,
-    longitude: PropTypes.number.isRequired,
-    zoom: PropTypes.number.isRequired,
-  })),
   points: PropTypes.arrayOf(PropTypes.shape({
     latitude: PropTypes.number,
     longitude: PropTypes.number,
