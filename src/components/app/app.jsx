@@ -6,7 +6,7 @@ import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';
 import Offer from '../../pages/offer/offer';
 import PageNotFound from '../../pages/not-found/not-found';
-import {offerProps, reviewProps} from '../prop-types/prop-types';
+import {reviewProps} from '../prop-types/prop-types';
 
 const App = ({
   reviews
@@ -37,7 +37,6 @@ const App = ({
 };
 
 App.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
 };
 

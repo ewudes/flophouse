@@ -1,7 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
-import {getCurrentOffers} from '../../utils';
 
 import "leaflet/dist/leaflet.css";
 
@@ -10,10 +9,6 @@ const STYLE = {
 };
 
 const Map = ({points, city}) => {
-  const curentOffers = getCurrentOffers(city, points);
-  if (!curentOffers.length) {
-    return ``;
-  }
   const mapRef = useRef();
   const cityLocation = points[0].city.location;
 

@@ -1,6 +1,5 @@
 export const ActionType = {
   CHANGE_CITY: `changeCity`,
-  GET_OFFERS: `getOffers`
 };
 
 export const ActionCreator = {
@@ -8,7 +7,4 @@ export const ActionCreator = {
     type: ActionType.CHANGE_CITY,
     payload: city
   }),
-  getOffers: () => ({
-    type: ActionType.GET_OFFERS
-  })
 };
