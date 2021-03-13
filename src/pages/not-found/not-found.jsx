@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../components/header/header';
 import {Link} from 'react-router-dom';
-import {CITIES} from '../../const';
+import Locations from '../../components/locations/locations';
 
 const NotFound = () => {
 
@@ -11,20 +11,7 @@ const NotFound = () => {
       <main className="page__main page__main--index page__main--index-empty">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-
-              {CITIES.map((city, index) => {
-                return (
-                  <li className="locations__item" key={index}>
-                    <a className="locations__item-link tabs__item" href={`${city}`}>
-                      <span>{city}</span>
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </section>
+          <Locations/>
         </div>
         <div className="cities">
           <div className="cities__places-container cities__places-container--empty container">

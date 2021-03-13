@@ -8,8 +8,9 @@ const STYLE = {
   height: `100%`
 };
 
-const Map = ({points, cityLocation}) => {
+const Map = ({points, city}) => {
   const mapRef = useRef();
+  const cityLocation = points[0].city.location;
 
   useEffect(() => {
     mapRef.current = leaflet.map(`map`, {
@@ -47,7 +48,7 @@ const Map = ({points, cityLocation}) => {
     return () => {
       mapRef.current.remove();
     };
-  }, []);
+  }, [city]);
 
   return (
     <div id="map" style={STYLE} ref={mapRef}></div>
@@ -55,16 +56,13 @@ const Map = ({points, cityLocation}) => {
 };
 
 Map.propTypes = {
-  cityLocation: PropTypes.shape({
-    latitude: PropTypes.number.isRequired,
-    longitude: PropTypes.number.isRequired,
-    zoom: PropTypes.number.isRequired,
-  }),
   points: PropTypes.arrayOf(PropTypes.shape({
     latitude: PropTypes.number,
     longitude: PropTypes.number,
     title: PropTypes.string.isRequired,
-  }))
+    city: PropTypes.objectOf.isRequired,
+  })),
+  city: PropTypes.string.isRequired
 };
 
 export default Map;
