@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import Card from '../../components/card/card';
 import Map from '../../components/map/map';
 import {offerProps} from '../prop-types/prop-types';
+import Sort from '../sort/sort';
 
 const OfferList = ({
   currentOffers,
-  city
+  city,
 }) => {
+
   return (
     <div className="cities__places-container container">
       <section className="cities__places places">
@@ -21,12 +23,7 @@ const OfferList = ({
               <use xlinkHref={`#icon-arrow-select`}></use>
             </svg>
           </span>
-          {/* <ul className="places__options places__options--custom places__options--opened">
-            <li className="places__option places__option--active" tabIndex="0">Popular</li>
-            <li className="places__option" tabIndex="0">Price: low to high</li>
-            <li className="places__option" tabIndex="0">Price: high to low</li>
-            <li className="places__option" tabIndex="0">Top rated first</li>
-          </ul> */}
+          <Sort/>
         </form>
         <div className="cities__places-list places__list tabs__content">
           {currentOffers.map((card) => <Card cardOption="main" {...card} key={card.id} />)}

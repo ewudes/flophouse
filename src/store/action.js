@@ -1,7 +1,8 @@
 export const ActionType = {
   CHANGE_CITY: `changeCity`,
   SET_ACTIVE_PIN: `setActivePin`,
-  DELETE_ACTIVE_PIN: `deleteActivePin`
+  DELETE_ACTIVE_PIN: `deleteActivePin`,
+  CHANGE_SORT: `changeSort`
 };
 
 export const ActionCreator = {
@@ -15,5 +16,9 @@ export const ActionCreator = {
   }),
   deleteActivePin: () => ({
     type: ActionType.DELETE_ACTIVE_PIN
-  })
+  }),
+  changeSort: (currentSort) => ({
+    type: ActionType.CHANGE_SORT,
+    payload: currentSort
+  }),
 };

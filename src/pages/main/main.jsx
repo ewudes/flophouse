@@ -7,12 +7,16 @@ import OfferEmpty from '../../components/offer-empty/offer-empty';
 import {offerProps} from '../../components/prop-types/prop-types';
 import {connect} from 'react-redux';
 import {filterOffersByCity} from "../../utils";
+import {getSorted} from '../../utils';
 
 const Main = ({
   offers,
-  city
+  city,
+  currentSort
 }) => {
   const currentOffers = filterOffersByCity(city, offers);
+  const sortedOffers = getSorted(currentSort, currentOffers);
+
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -25,7 +29,7 @@ const Main = ({
           {
             currentOffers.length ?
               <OfferList
-                currentOffers={currentOffers}
+                currentOffers={sortedOffers}
                 city={city}
               /> :
               <OfferEmpty city={city} />}
@@ -37,12 +41,14 @@ const Main = ({
 
 Main.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
-  city: PropTypes.string.isRequired
+  city: PropTypes.string.isRequired,
+  currentSort: PropTypes.string.isRequired
 };
 
-const mapStateToProps = ({offers, city}) => ({
+const mapStateToProps = ({offers, city, currentSort}) => ({
   offers,
-  city
+  city,
+  currentSort
 });
 
 export {Main};
