@@ -2,7 +2,7 @@ import {SORT_TYPES} from './const';
 
 export const filterOffersByCity = (city, offers) => offers.filter((offer) => offer.city.name === city);
 
-export const getSorted = (currentSort, offers) => {
+export const sortOffers = (currentSort, offers) => {
   switch (currentSort) {
     case SORT_TYPES.LOW_PRICE:
       return offers.sort((a, b) => a.price - b.price);

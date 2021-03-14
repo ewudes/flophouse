@@ -51,8 +51,8 @@ const Card = ({
 }) => {
   const cardType = CARD_TYPES[cardOption];
 
-  const handleMouseOver = (index) => {
-    setActivePin(index);
+  const handleMouseOver = () => {
+    setActivePin(id);
   };
 
   const handleMouseLeave = () => {
@@ -62,8 +62,8 @@ const Card = ({
   return (
     <article
       className={`${cardType.articleClassName} place-card`}
-      onMouseOver={() => handleMouseOver(id)}
-      onMouseLeave={() => handleMouseLeave()}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div> || ``}
       <div className={`${cardType.img.className}__image-wrapper place-card__image-wrapper`}>
