@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {connect} from 'react-redux';
 
 import {PropTypes} from 'prop-types';
@@ -6,25 +6,46 @@ import {ActionCreator} from '../../store/action';
 import {SORT_LIST} from '../../const';
 
 const Sort = ({changeSort, currentSort}) => {
-  const handleClickSort = (evt) => {
-    changeSort(evt.currentTarget.dataset.sortType);
+  const selectRef = useRef();
+
+  const handleClickSelect = () => {
+    selectRef.current.classList.toggle(`places__options--opened`);
   };
+
+  const handleClickSortType = (evt) => {
+    changeSort(evt.currentTarget.dataset.sortType);
+    selectRef.current.classList.remove(`places__options--opened`);
+  };
+
   return (
-    <ul className="places__options places__options--custom places__options--opened">
-      {
-        SORT_LIST.map(({text, type}) =>
-          <li
-            key={type}
-            className={`places__option ${currentSort === type ? `places__option--active` : ``}`}
-            data-sort-type={type}
-            tabIndex={0}
-            onClick={handleClickSort}
-          >
-            {text}
-          </li>
-        )
-      }
-    </ul>
+    <form className="places__sorting" action="#" method="get">
+      <span className="places__sorting-caption">Sort by </span>
+      <span
+        className="places__sorting-type"
+        tabIndex="0"
+        onClick={handleClickSelect}
+      >
+        {SORT_LIST.map(({text, type}) => (type === currentSort) ? text : null)}
+        <svg className="places__sorting-arrow" width="7" height="4">
+          <use xlinkHref={`#icon-arrow-select`}></use>
+        </svg>
+      </span>
+      <ul className="places__options places__options--custom" ref={selectRef}>
+        {
+          SORT_LIST.map(({text, type}) =>
+            <li
+              key={type}
+              className={`places__option ${currentSort === type ? `places__option--active` : ``}`}
+              data-sort-type={type}
+              tabIndex={0}
+              onClick={handleClickSortType}
+            >
+              {text}
+            </li>
+          )
+        }
+      </ul>
+    </form>
   );
 };
 
