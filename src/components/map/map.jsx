@@ -29,6 +29,13 @@ const Map = ({points, city, activeOffer}) => {
       })
       .addTo(mapRef.current);
 
+    return () => {
+      mapRef.current.remove();
+    };
+  }, [city]);
+
+  useEffect(() => {
+    const pins = [];
     points.forEach((point) => {
       const customIcon = leaflet.icon({
         iconUrl: `${activeOffer !== point.id ? `./img/pin.svg` : `./img/pin-active.svg`}`,
@@ -45,11 +52,12 @@ const Map = ({points, city, activeOffer}) => {
       .addTo(mapRef.current)
       .bindPopup(point.title);
     });
-
+    const pinsGroup = leaflet.layerGroup(pins);
+    mapRef.current.addLayer(pinsGroup);
     return () => {
-      mapRef.current.remove();
+      pinsGroup.clearLayers();
     };
-  }, [city, activeOffer]);
+  }, [activeOffer, city, points]);
 
   return (
     <div id="map" style={STYLE} ref={mapRef}></div>
