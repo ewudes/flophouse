@@ -36,7 +36,7 @@ const CARD_TYPES = {
   }
 };
 
-const Card = ({
+const Offer = ({
   isPremium,
   isFavorite,
   previewImage,
@@ -99,7 +99,7 @@ const Card = ({
   );
 };
 
-Card.propTypes = {...offerProps};
+Offer.propTypes = {...offerProps};
 
 const mapDispatchToProps = (dispatch) => ({
   setActivePin(id) {
@@ -110,5 +110,5 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export {Card};
-export default connect(null, mapDispatchToProps)(Card);
+export {Offer};
+export default connect(null, mapDispatchToProps)(Offer);

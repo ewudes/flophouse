@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card from '../../components/card/card';
-import Map from '../../components/map/map';
+import Offer from '../offer/offer';
+import Map from '../map/map';
 import {offerProps} from '../prop-types/prop-types';
 import Sort from '../sort/sort';
 
@@ -17,7 +17,7 @@ const OfferList = ({
         <b className="places__found">{currentOffers.length} places to stay in {city}</b>
         <Sort/>
         <div className="cities__places-list places__list tabs__content">
-          {currentOffers.map((card) => <Card cardOption="main" {...card} key={card.id} />)}
+          {currentOffers.map((offer) => <Offer cardOption="main" {...offer} key={offer.id} />)}
         </div>
       </section>
       <div className="cities__right-section">

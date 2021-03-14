@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card from '../card/card';
+import Offer from '../offer/offer';
 import {offerProps} from '../prop-types/prop-types';
 
 const NearPlacesList = ({nearPlaces}) => {
@@ -8,7 +8,7 @@ const NearPlacesList = ({nearPlaces}) => {
     <>
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
       <div className="near-places__list places__list">
-        {nearPlaces.map((place) => <Card cardOption="offer" {...place} key={place.id} />)}
+        {nearPlaces.map((place) => <Offer cardOption="offer" {...place} key={place.id} />)}
       </div>
     </>
   );

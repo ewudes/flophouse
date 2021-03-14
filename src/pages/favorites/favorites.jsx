@@ -20,7 +20,7 @@ const Favorites = ({
             <ul className="favorites__list">
 
               {CITIES.map((city, index) => {
-                const filtered = offers.filter((card) => card.city.name === city && card.isFavorite);
+                const filtered = offers.filter((offer) => offer.city.name === city && offer.isFavorite);
                 return filtered.length < 1 ? `` : <FavoritesItems city={city} offers={filtered} key={index} />;
               })}
 
