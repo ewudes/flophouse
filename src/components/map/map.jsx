@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
 import "leaflet/dist/leaflet.css";
 
@@ -8,7 +9,7 @@ const STYLE = {
   height: `100%`
 };
 
-const Map = ({points, city}) => {
+const Map = ({points, city, activeOffer}) => {
   const mapRef = useRef();
   const cityLocation = points[0].city.location;
 
@@ -30,7 +31,7 @@ const Map = ({points, city}) => {
 
     points.forEach((point) => {
       const customIcon = leaflet.icon({
-        iconUrl: `./img/pin.svg`,
+        iconUrl: `${activeOffer !== point.id ? `./img/pin.svg` : `./img/pin-active.svg`}`,
         iconSize: [27, 39]
       });
 
@@ -48,7 +49,7 @@ const Map = ({points, city}) => {
     return () => {
       mapRef.current.remove();
     };
-  }, [city]);
+  }, [city, activeOffer]);
 
   return (
     <div id="map" style={STYLE} ref={mapRef}></div>
@@ -62,7 +63,13 @@ Map.propTypes = {
     title: PropTypes.string.isRequired,
     city: PropTypes.objectOf.isRequired,
   })),
-  city: PropTypes.string.isRequired
+  city: PropTypes.string.isRequired,
+  activeOffer: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired
 };
 
-export default Map;
+const mapStateToProps = ({activeOffer}) => ({
+  activeOffer
+});
+
+export {Map};
+export default connect(mapStateToProps, null)(Map);

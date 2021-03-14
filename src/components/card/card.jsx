@@ -1,6 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {offerProps} from '../prop-types/prop-types';
+import {ActionCreator} from '../../store/action';
+import {connect} from 'react-redux';
 
 const FACTOR = 20;
 
@@ -43,12 +45,26 @@ const Card = ({
   title,
   type,
   cardOption,
-  id
+  id,
+  setActivePin,
+  deleteActivePin
 }) => {
   const cardType = CARD_TYPES[cardOption];
 
+  const handleMouseOver = (index) => {
+    setActivePin(index);
+  };
+
+  const handleMouseLeave = () => {
+    deleteActivePin();
+  };
+
   return (
-    <article className={`${cardType.articleClassName} place-card`}>
+    <article
+      className={`${cardType.articleClassName} place-card`}
+      onMouseOver={() => handleMouseOver(id)}
+      onMouseLeave={() => handleMouseLeave()}
+    >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div> || ``}
       <div className={`${cardType.img.className}__image-wrapper place-card__image-wrapper`}>
         <Link to={`/offer/${id}`}>
@@ -85,4 +101,14 @@ const Card = ({
 
 Card.propTypes = {...offerProps};
 
-export default Card;
+const mapDispatchToProps = (dispatch) => ({
+  setActivePin(id) {
+    dispatch(ActionCreator.setActivePin(id));
+  },
+  deleteActivePin() {
+    dispatch(ActionCreator.deleteActivePin());
+  },
+});
+
+export {Card};
+export default connect(null, mapDispatchToProps)(Card);

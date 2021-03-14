@@ -3,7 +3,8 @@ import {ActionType} from './action';
 
 const initialState = {
   city: `Paris`,
-  offers
+  offers,
+  activeOffer: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,6 +13,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         city: action.payload
+      };
+    case ActionType.SET_ACTIVE_PIN:
+      return {
+        ...state,
+        activeOffer: action.payload
+      };
+    case ActionType.DELETE_ACTIVE_PIN:
+      return {
+        ...state,
+        activeOffer: false
       };
     default:
       return state;
