@@ -57,7 +57,7 @@ const Map = ({points, city, activeOffer}) => {
     return () => {
       pinsGroup.clearLayers();
     };
-  }, [activeOffer, city, points]);
+  }, [activeOffer, points]);
 
   return (
     <div id="map" style={STYLE} ref={mapRef}></div>

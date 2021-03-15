@@ -25,7 +25,7 @@ const Sort = ({changeSort, currentSort}) => {
         tabIndex="0"
         onClick={handleClickSelect}
       >
-        {SORT_LIST.map(({text, type}) => (type === currentSort) ? text : null)}
+        {SORT_LIST.find(({type}) => (type === currentSort)).text}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref={`#icon-arrow-select`}></use>
         </svg>
