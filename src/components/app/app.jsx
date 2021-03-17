@@ -6,30 +6,29 @@ import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';
 import Offer from '../../pages/offer/offer';
 import PageNotFound from '../../pages/not-found/not-found';
-import {reviewProps} from '../prop-types/prop-types';
+import {AppRoute} from '../../const';
 
 const App = ({
-  reviews
+  userName
 }) => {
 
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/login">
+        <Route exact path={AppRoute.LOGIN}>
           <Login />
         </Route>
-        <Route exact path="/offer/:id"
-          render={(props) => <Offer reviews={reviews} {...props} />}
-        >
+        <Route exact path={AppRoute.OFFER}>
+          <Offer userName={userName} />
         </Route>
-        <Route exact path="/favorites">
-          <Favorites />
+        <Route exact path={AppRoute.FAVORITES}>
+          <Favorites userName={userName}/>
         </Route>
-        <Route exact path="/">
-          <Main />
+        <Route exact path={AppRoute.MAIN}>
+          <Main userName={userName}/>
         </Route>
         <Route>
-          <PageNotFound />
+          <PageNotFound userName={userName}/>
         </Route>
       </Switch>
     </BrowserRouter>
@@ -37,7 +36,7 @@ const App = ({
 };
 
 App.propTypes = {
-  reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
+  userName: PropTypes.string.isRequired,
 };
 
 export default App;

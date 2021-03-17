@@ -25,3 +25,16 @@ export const SORT_LIST = [
     type: SORT_TYPES.TOP_RATED
   },
 ];
+
+export const AppRoute = {
+  MAIN: `/`,
+  OFFER: `/offer/:id`,
+  LOGIN: `/login`,
+  FAVORITES: `/favorites`,
+  NOT_FOUND: `/404`
+};
+
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`
+};

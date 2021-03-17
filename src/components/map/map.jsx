@@ -10,6 +10,10 @@ const STYLE = {
 };
 
 const Map = ({points, city, activeOffer}) => {
+  if (!points.length) {
+    return null;
+  }
+
   const mapRef = useRef();
   const cityLocation = points[0].city.location;
 

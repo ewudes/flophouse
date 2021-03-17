@@ -8,11 +8,12 @@ import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 
 const Favorites = ({
-  offers
+  offers,
+  userName
 }) => {
   return (
     <div className="page">
-      <Header />
+      <Header userName={userName}/>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
@@ -39,6 +40,7 @@ const Favorites = ({
 
 Favorites.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
+  userName: PropTypes.string.isRequired
 };
 
 const mapStateToProps = ({offers}) => ({
