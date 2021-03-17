@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Redirect} from 'react-router-dom';
+import {Redirect, useRouteMatch} from 'react-router-dom';
 import Header from '../../components/header/header';
 import ReviewList from '../../components/reviews-list/reviews-list';
 import ReviewForm from '../../components/review-form/review-form';
@@ -8,19 +8,32 @@ import NearPlaces from '../../components/near-places-list/near-places-list';
 import {offerProps, reviewProps} from '../../components/prop-types/prop-types';
 import Map from '../../components/map/map';
 import {connect} from "react-redux";
+import {fetchOfferData} from '../../store/api-actions';
+import Spinner from '../../components/spinner/spinner';
 
 const FACTOR = 20;
 
-const getCurrentOffer = (id, offers) => offers.find((item) => Number(id) === item.id);
-
-const Offer = ({offers, reviews, city, ...props}) => {
-  const id = props.match.params.id;
-  const offer = getCurrentOffer(id, offers);
-
-  const setNearPlaces = (places, count) => places.slice(0, count);
+const Offer = ({
+  offer,
+  reviews,
+  city,
+  userName,
+  nearbyOffers,
+  setOfferData
+}) => {
+  const match = useRouteMatch();
+  const id = match.params.id;
 
   if (!offer) {
     return <Redirect to="/404" />;
+  }
+
+  if (String(offer.id) !== id) {
+
+    setOfferData(id);
+    return (
+      <Spinner />
+    );
   }
 
   const {
@@ -40,7 +53,7 @@ const Offer = ({offers, reviews, city, ...props}) => {
 
   return (
     <div className="page">
-      <Header />
+      <Header userName={userName}/>
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
@@ -124,7 +137,7 @@ const Offer = ({offers, reviews, city, ...props}) => {
           </div>
           <section className="property__map map">
             <Map
-              points={setNearPlaces(offers, 3)}
+              points={nearbyOffers}
               city={city}
             />
           </section>
@@ -132,7 +145,7 @@ const Offer = ({offers, reviews, city, ...props}) => {
         <div className="container">
           <section className="near-places places">
             <NearPlaces
-              nearPlaces={setNearPlaces(offers, 3)}
+              nearPlaces={nearbyOffers}
             />
           </section>
         </div>
@@ -141,22 +154,28 @@ const Offer = ({offers, reviews, city, ...props}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  offers: state.offers,
-  city: state.city
+const mapStateToProps = ({offers, city, reviews, offer, nearbyOffers}) => ({
+  offers,
+  offer,
+  city,
+  reviews,
+  nearbyOffers
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setOfferData(id) {
+    dispatch(fetchOfferData(id));
+  }
 });
 
 Offer.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
+  offer: PropTypes.oneOfType([PropTypes.shape(offerProps), PropTypes.object]).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
   city: PropTypes.string.isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      experiment: PropTypes.string,
-      id: PropTypes.string,
-    }),
-  }).isRequired,
+  userName: PropTypes.string.isRequired,
+  setOfferData: PropTypes.func.isRequired,
+  nearbyOffers: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape(offerProps)), PropTypes.array]).isRequired,
 };
 
 export {Offer};
-export default connect(mapStateToProps, null)(Offer);
+export default connect(mapStateToProps, mapDispatchToProps)(Offer);

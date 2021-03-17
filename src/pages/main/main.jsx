@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Header from '../../components/header/header';
 import Locations from '../../components/locations/locations';
@@ -8,15 +8,31 @@ import {offerProps} from '../../components/prop-types/prop-types';
 import {connect} from 'react-redux';
 import {filterOffersByCity} from "../../utils";
 import {sortOffers} from '../../utils';
+import {fetchOfferList} from '../../store/api-actions';
+import Spinner from '../../components/spinner/spinner';
 
 const Main = ({
   offers,
   city,
+  userName,
+  isDataLoaded,
+  onLoadData
 }) => {
+  useEffect(() => {
+    if (!isDataLoaded) {
+      onLoadData();
+    }
+  }, [isDataLoaded]);
+
+  if (!isDataLoaded) {
+    return (
+      <Spinner/>
+    );
+  }
 
   return (
     <div className="page page--gray page--main">
-      <Header />
+      <Header userName={userName}/>
       <main className={`page__main page__main--index ${!offers.length && `page__main--index-empty`}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
@@ -39,12 +55,22 @@ const Main = ({
 Main.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
   city: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({offers, city, currentSort}) => ({
+const mapStateToProps = ({offers, city, currentSort, isDataLoaded}) => ({
   offers: sortOffers(currentSort, filterOffersByCity(city, offers)),
   city,
+  isDataLoaded
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData() {
+    dispatch(fetchOfferList());
+  }
 });
 
 export {Main};
-export default connect(mapStateToProps, null)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
