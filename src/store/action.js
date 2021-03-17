@@ -1,14 +1,14 @@
 
 export const ActionType = {
-  CHANGE_CITY: `changeCity`,
-  SET_ACTIVE_PIN: `setActivePin`,
-  DELETE_ACTIVE_PIN: `deleteActivePin`,
-  CHANGE_SORT: `changeSort`,
-  LOAD_OFFERS: `loadOffers`,
-  SET_OFFER: `setOffer`,
-  SET_REVIEWS: `setReviews`,
-  SET_NEARBY_OFFERS: `setNearbyOffers`,
-  REQUIRED_AUTHORIZATION: `requiredAuthorization`
+  CHANGE_CITY: `main/changeCity`,
+  SET_ACTIVE_PIN: `main/setActivePin`,
+  DELETE_ACTIVE_PIN: `main/deleteActivePin`,
+  CHANGE_SORT: `main/changeSort`,
+  LOAD_OFFERS: `data/loadOffers`,
+  SET_OFFER: `data/setOffer`,
+  SET_REVIEWS: `data/setReviews`,
+  SET_NEARBY_OFFERS: `data/setNearbyOffers`,
+  REQUIRED_AUTHORIZATION: `data/requiredAuthorization`
 };
 
 export const ActionCreator = {
