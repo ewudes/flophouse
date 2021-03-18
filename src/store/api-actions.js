@@ -32,7 +32,8 @@ export const checkAuth = () => (dispatch, _getState, api) => (
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(`/login`, {email, password})
-    .then(() =>
-      dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.AUTH))
-    )
+    .then(() => {
+      dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.AUTH));
+      dispatch(ActionCreator.changeUserName(email));
+    })
 );

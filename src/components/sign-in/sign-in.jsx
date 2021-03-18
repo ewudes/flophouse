@@ -4,9 +4,9 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {AuthorizationStatus, AppRoute} from '../../const';
 
-const SignIn = ({authorizationStatus, userName = ``}) => {
+const SignIn = ({authorizationStatus, userName}) => {
   return authorizationStatus === AuthorizationStatus.AUTH ?
-    <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVOR}>
+    <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>
       <div className="header__avatar-wrapper user__avatar-wrapper">
       </div>
       <span className="header__user-name user__name">{userName}</span>
@@ -19,14 +19,15 @@ const SignIn = ({authorizationStatus, userName = ``}) => {
 
 };
 
+const mapStateToProps = ({authorizationStatus, userName}) => ({
+  authorizationStatus,
+  userName
+});
+
 SignIn.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
-  userName: PropTypes.string.isRequired
+  userName: PropTypes.string
 };
-
-const mapStateToProps = ({authorizationStatus}) => ({
-  authorizationStatus
-});
 
 export {SignIn};
 export default connect(mapStateToProps, null)(SignIn);

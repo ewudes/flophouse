@@ -55,7 +55,7 @@ const Main = ({
 Main.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
   city: PropTypes.string.isRequired,
-  userName: PropTypes.string.isRequired,
+  userName: PropTypes.string,
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
 };

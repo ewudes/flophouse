@@ -36,7 +36,7 @@ const App = ({
 };
 
 App.propTypes = {
-  userName: PropTypes.string.isRequired,
+  userName: PropTypes.string,
 };
 
 export default App;

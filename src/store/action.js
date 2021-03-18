@@ -8,7 +8,8 @@ export const ActionType = {
   SET_OFFER: `data/setOffer`,
   SET_REVIEWS: `data/setReviews`,
   SET_NEARBY_OFFERS: `data/setNearbyOffers`,
-  REQUIRED_AUTHORIZATION: `data/requiredAuthorization`
+  REQUIRED_AUTHORIZATION: `data/requiredAuthorization`,
+  CHANGE_USER_NAME: `user/changeUserName`,
 };
 
 export const ActionCreator = {
@@ -46,5 +47,9 @@ export const ActionCreator = {
   requiredAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status
+  }),
+  changeUserName: (userName) => ({
+    type: ActionType.CHANGE_USER_NAME,
+    payload: userName
   }),
 };

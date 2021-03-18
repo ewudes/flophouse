@@ -11,6 +11,7 @@ const initialState = {
   isDataLoaded: false,
   reviews: [],
   nearbyOffers: [],
+  userName: ``,
 };
 
 const reducer = (state = initialState, action) => {
@@ -60,6 +61,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         nearbyOffers: action.payload,
+      };
+    case ActionType.CHANGE_USER_NAME:
+      return {
+        ...state,
+        userName: action.payload
       };
     default:
       return state;

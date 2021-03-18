@@ -172,7 +172,7 @@ Offer.propTypes = {
   offer: PropTypes.oneOfType([PropTypes.shape(offerProps), PropTypes.object]).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
   city: PropTypes.string.isRequired,
-  userName: PropTypes.string.isRequired,
+  userName: PropTypes.string,
   setOfferData: PropTypes.func.isRequired,
   nearbyOffers: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape(offerProps)), PropTypes.array]).isRequired,
 };
