@@ -52,14 +52,6 @@ const Main = ({
   );
 };
 
-Main.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
-  city: PropTypes.string.isRequired,
-  userName: PropTypes.string,
-  isDataLoaded: PropTypes.bool.isRequired,
-  onLoadData: PropTypes.func.isRequired,
-};
-
 const mapStateToProps = ({offers, city, currentSort, isDataLoaded}) => ({
   offers: sortOffers(currentSort, filterOffersByCity(city, offers)),
   city,
@@ -71,6 +63,14 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchOfferList());
   }
 });
+
+Main.propTypes = {
+  offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
+  city: PropTypes.string.isRequired,
+  userName: PropTypes.string,
+  isDataLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
+};
 
 export {Main};
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

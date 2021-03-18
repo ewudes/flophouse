@@ -38,11 +38,6 @@ const Favorites = ({
   );
 };
 
-Favorites.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
-  userName: PropTypes.string.isRequired
-};
-
 const mapStateToProps = ({offers}) => ({
   offers,
 });
@@ -52,6 +47,11 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreator.changeCity(city));
   }
 });
+
+Favorites.propTypes = {
+  offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
+  userName: PropTypes.string.isRequired
+};
 
 export {Favorites};
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

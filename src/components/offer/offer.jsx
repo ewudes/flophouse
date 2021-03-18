@@ -99,8 +99,6 @@ const Offer = ({
   );
 };
 
-Offer.propTypes = {...offerProps};
-
 const mapDispatchToProps = (dispatch) => ({
   setActivePin(id) {
     dispatch(ActionCreator.setActivePin(id));
@@ -109,6 +107,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreator.deleteActivePin());
   },
 });
+
+Offer.propTypes = {...offerProps};
 
 export {Offer};
 export default connect(null, mapDispatchToProps)(Offer);

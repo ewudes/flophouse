@@ -68,6 +68,10 @@ const Map = ({points, city, activeOffer}) => {
   );
 };
 
+const mapStateToProps = ({activeOffer}) => ({
+  activeOffer
+});
+
 Map.propTypes = {
   points: PropTypes.arrayOf(PropTypes.shape({
     latitude: PropTypes.number,
@@ -78,10 +82,6 @@ Map.propTypes = {
   city: PropTypes.string.isRequired,
   activeOffer: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired
 };
-
-const mapStateToProps = ({activeOffer}) => ({
-  activeOffer
-});
 
 export {Map};
 export default connect(mapStateToProps, null)(Map);
