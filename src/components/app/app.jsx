@@ -1,42 +1,33 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import Main from '../../pages/main/main';
 import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';
 import Offer from '../../pages/offer/offer';
 import PageNotFound from '../../pages/not-found/not-found';
 import {AppRoute} from '../../const';
+import PrivateRoute from '../private-route/private-route';
+import browserHistory from '../../browser-history';
 
-const App = ({
-  userName
-}) => {
+const App = () => {
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path={AppRoute.LOGIN}>
-          <Login />
-        </Route>
+        <PrivateRoute exact path={AppRoute.LOGIN} render={()=> <Login />} />
         <Route exact path={AppRoute.OFFER}>
-          <Offer userName={userName} />
+          <Offer />
         </Route>
-        <Route exact path={AppRoute.FAVORITES}>
-          <Favorites userName={userName}/>
-        </Route>
+        <PrivateRoute exact path={AppRoute.FAVORITES} render={() => <Favorites />} />
         <Route exact path={AppRoute.MAIN}>
-          <Main userName={userName}/>
+          <Main />
         </Route>
         <Route>
-          <PageNotFound userName={userName}/>
+          <PageNotFound />
         </Route>
       </Switch>
     </BrowserRouter>
   );
-};
-
-App.propTypes = {
-  userName: PropTypes.string,
 };
 
 export default App;

@@ -10,6 +10,11 @@ export const ActionType = {
   SET_NEARBY_OFFERS: `data/setNearbyOffers`,
   REQUIRED_AUTHORIZATION: `data/requiredAuthorization`,
   CHANGE_USER_NAME: `user/changeUserName`,
+  SET_FAVORITES: `data/setFavorites`,
+  ADD_FAVORITES: `data/addFavorites`,
+  REMOVE_FAVORITES: `data/removeFavorites`,
+  TOGGLE_FAVORITE: `data/toggleFavorite`,
+  REDIRECT_TO_ROUTE: `login/redirectToRoute`
 };
 
 export const ActionCreator = {
@@ -52,4 +57,24 @@ export const ActionCreator = {
     type: ActionType.CHANGE_USER_NAME,
     payload: userName
   }),
+  setFavorites: (favorites) => ({
+    type: ActionType.SET_FAVORITES,
+    payload: favorites
+  }),
+  addFavorites: (favoriteOffer) => ({
+    type: ActionType.ADD_FAVORITES,
+    payload: favoriteOffer
+  }),
+  removeFavorites: (id) => ({
+    type: ActionType.REMOVE_FAVORITES,
+    payload: id
+  }),
+  toggleFavorite: (offerId) => ({
+    type: ActionType.TOGGLE_FAVORITE,
+    payload: offerId
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url
+  })
 };

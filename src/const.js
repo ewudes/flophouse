@@ -34,7 +34,20 @@ export const AppRoute = {
   NOT_FOUND: `/404`
 };
 
+export const ApiRoute = {
+  HOTELS: `/hotels`,
+  FAVORITES: `/favorite`,
+  COMMENTS: `/comments`,
+  LOGIN: `/login`,
+  LOGOUT: `/logout`
+};
+
 export const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`
+};
+
+export const HTTP_CODE = {
+  UNAUTHORIZED: 401,
+  NOT_FOUND: 404
 };

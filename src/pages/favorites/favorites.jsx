@@ -1,16 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Header from '../../components/header/header';
 import PropTypes from 'prop-types';
+import {offerProps} from '../../components/prop-types/prop-types';
 import FavoritesItems from '../../components/favorites-items/favorites-items';
 import {CITIES} from '../../const';
-import {offerProps} from '../../components/prop-types/prop-types';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
+import {fetchFavorites} from './../../store/api-actions';
+import Spinner from '../../components/spinner/spinner';
 
 const Favorites = ({
   offers,
-  userName
+  userName,
+  isFavoritesLoaded,
+  setFavorites
 }) => {
+  useEffect(() => {
+    if (!isFavoritesLoaded) {
+      setFavorites();
+    }
+  }, [isFavoritesLoaded]);
+
+  if (!isFavoritesLoaded) {
+    return (
+      <Spinner />
+    );
+  }
+
   return (
     <div className="page">
       <Header userName={userName}/>
@@ -38,19 +54,25 @@ const Favorites = ({
   );
 };
 
-const mapStateToProps = ({offers}) => ({
+const mapStateToProps = ({offers, isFavoritesLoaded}) => ({
   offers,
+  isFavoritesLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeCity(city) {
     dispatch(ActionCreator.changeCity(city));
+  },
+  setFavorites() {
+    dispatch(fetchFavorites());
   }
 });
 
 Favorites.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
-  userName: PropTypes.string.isRequired
+  offers: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape(offerProps)), PropTypes.array]).isRequired,
+  userName: PropTypes.string,
+  isFavoritesLoaded: PropTypes.bool.isRequired,
+  setFavorites: PropTypes.func.isRequired
 };
 
 export {Favorites};
