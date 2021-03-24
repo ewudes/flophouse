@@ -1,14 +1,7 @@
 import {ActionCreator} from "./action";
-import {AuthorizationStatus, ApiRoute, AppRoute, HTTP_CODE, LOCAL_STORE_KEYS, avatar} from './../const';
+import {AuthorizationStatus, ApiRoute, AppRoute, HTTP_CODE, avatar} from './../const';
 import {adaptOfferToClient, adaptReviewsToClient} from "./adapters";
 import {sortOffers} from "../utils";
-import Store from "./local-store";
-
-const STORE_AUTH_PREFIX = `sixcities-auth-localstorage`;
-const STORE_VER = `v1`;
-const STORE_AUTH_NAME = `${STORE_AUTH_PREFIX}-${STORE_VER}`;
-
-const localStore = new Store(STORE_AUTH_NAME, window.localStorage);
 
 export const fetchOfferList = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.HOTELS)
@@ -41,22 +34,15 @@ export const fetchOfferData = (id) => (dispatch, _getState, api) => (
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => {
-  const {authorizationStatus, email, avatarUrl} = localStore.getItems();
-
-  if (authorizationStatus === AuthorizationStatus.AUTH) {
-    dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.AUTH));
-    dispatch(ActionCreator.changeUserName(email));
-    dispatch(ActionCreator.changeUserAvatar(avatarUrl));
-    return;
-  }
-
-  api.get(ApiRoute.LOGIN)
+  return api.get(ApiRoute.LOGIN)
     .then(({data}) => {
       dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.AUTH));
       dispatch(ActionCreator.changeUserName(data.email));
       dispatch(ActionCreator.changeUserAvatar(data[`avatar_url`]));
     })
-    .catch(() => { });
+    .catch(() => {
+      dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.NO_AUTH));
+    });
 };
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
@@ -65,10 +51,6 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
       dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.AUTH));
       dispatch(ActionCreator.changeUserName(email));
       dispatch(ActionCreator.changeUserAvatar(data[`avatar_url`]));
-
-      localStore.setItem(LOCAL_STORE_KEYS.AUTH, AuthorizationStatus.AUTH);
-      localStore.setItem(LOCAL_STORE_KEYS.EMAIL, email);
-      localStore.setItem(LOCAL_STORE_KEYS.AVATAR_URL, data[`avatar_url`]);
     })
   .then(()=> dispatch(ActionCreator.redirectToRoute(AppRoute.MAIN)))
 );
@@ -97,9 +79,6 @@ export const toggleFavorite = (id, status) => (dispatch, _getState, api) => (
         case HTTP_CODE.UNAUTHORIZED:
           dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN));
           dispatch(ActionCreator.changeUserAvatar(avatar));
-          localStore.removeItem(LOCAL_STORE_KEYS.AUTH);
-          localStore.removeItem(LOCAL_STORE_KEYS.EMAIL);
-          localStore.removeItem(LOCAL_STORE_KEYS.AVATAR_URL);
           break;
 
         default:
