@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {Redirect, useRouteMatch} from 'react-router-dom';
+import {useRouteMatch} from 'react-router-dom';
 import Header from '../../components/header/header';
 import ReviewList from '../../components/reviews-list/reviews-list';
 import ReviewForm from '../../components/review-form/review-form';
@@ -8,7 +8,7 @@ import NearPlaces from '../../components/near-places-list/near-places-list';
 import {offerProps, reviewProps} from '../../components/prop-types/prop-types';
 import Map from '../../components/map/map';
 import {connect} from "react-redux";
-import {fetchOfferData} from '../../store/api-actions';
+import {fetchOfferData, toggleFavorite} from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 
 const FACTOR = 20;
@@ -17,20 +17,20 @@ const Offer = ({
   offer,
   reviews,
   city,
-  userName,
   nearbyOffers,
-  setOfferData
+  setOfferData,
+  onFavorite,
 }) => {
   const match = useRouteMatch();
   const id = match.params.id;
 
-  if (!offer) {
-    return <Redirect to="/404" />;
-  }
+  useEffect(() => {
+    if (String(offer.id) !== id) {
+      setOfferData(id);
+    }
+  }, [id]);
 
   if (String(offer.id) !== id) {
-
-    setOfferData(id);
     return (
       <Spinner />
     );
@@ -51,14 +51,20 @@ const Offer = ({
     description,
   } = offer;
 
+  const handleClickFavorite = () => {
+    const newStatus = Number(!isFavorite);
+    onFavorite(id, newStatus);
+
+  };
+
   return (
     <div className="page">
-      <Header userName={userName}/>
+      <Header />
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image, index) => (
+              {images.slice(0, 6).map((image, index) => (
                 <div className="property__image-wrapper" key={index}>
                   <img className="property__image" src={image} alt="Photo studio" />
                 </div>
@@ -72,7 +78,11 @@ const Offer = ({
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className={`property__bookmark-button button${isFavorite && ` property__bookmark-button--active` || ``}`} type="button">
+                <button
+                  className={`property__bookmark-button button${isFavorite && ` property__bookmark-button--active` || ``}`}
+                  type="button"
+                  onClick={handleClickFavorite}
+                >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -154,27 +164,29 @@ const Offer = ({
   );
 };
 
-const mapStateToProps = ({offers, city, reviews, offer, nearbyOffers}) => ({
-  offers,
+const mapStateToProps = ({city, reviews, offer, nearbyOffers}) => ({
   offer,
   city,
   reviews,
-  nearbyOffers
+  nearbyOffers,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setOfferData(id) {
     dispatch(fetchOfferData(id));
-  }
+  },
+  onFavorite(id, isFavorite) {
+    dispatch(toggleFavorite(id, isFavorite));
+  },
 });
 
 Offer.propTypes = {
   offer: PropTypes.oneOfType([PropTypes.shape(offerProps), PropTypes.object]).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
   city: PropTypes.string.isRequired,
-  userName: PropTypes.string,
   setOfferData: PropTypes.func.isRequired,
   nearbyOffers: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape(offerProps)), PropTypes.array]).isRequired,
+  onFavorite: PropTypes.func.isRequired,
 };
 
 export {Offer};

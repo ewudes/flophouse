@@ -1,5 +1,7 @@
 export const CITIES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];
 
+export const avatar = `../img/avatar.svg`;
+
 export const SORT_TYPES = {
   POPULAR: `popular`,
   LOW_PRICE: `low-price`,
@@ -39,7 +41,6 @@ export const ApiRoute = {
   FAVORITES: `/favorite`,
   COMMENTS: `/comments`,
   LOGIN: `/login`,
-  LOGOUT: `/logout`
 };
 
 export const AuthorizationStatus = {
@@ -50,4 +51,10 @@ export const AuthorizationStatus = {
 export const HTTP_CODE = {
   UNAUTHORIZED: 401,
   NOT_FOUND: 404
+};
+
+export const LOCAL_STORE_KEYS = {
+  AUTH: `authorizationStatus`,
+  EMAIL: `email`,
+  AVATAR_URL: `avatarUrl`
 };

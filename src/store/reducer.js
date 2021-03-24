@@ -1,5 +1,5 @@
 import {ActionType} from "./action";
-import {AuthorizationStatus, SORT_TYPES} from "../const";
+import {AuthorizationStatus, SORT_TYPES, avatar} from "../const";
 
 const getItem = (list, id) => {
   const listId = list.map((item) => item.id);
@@ -12,9 +12,9 @@ const addFavorites = (newFavorite, currentFavorites) => {
 
 const toggleFavorite = (offer, currentOffers) => {
   const cardId = getItem(currentOffers, offer.id);
-  return (
-    [...currentOffers.slice(0, cardId), offer, ...currentOffers.slice((cardId + 1), currentOffers.length)]
-  );
+  return cardId !== -1
+    ? [...currentOffers.slice(0, cardId), offer, ...currentOffers.slice((cardId + 1), currentOffers.length)]
+    : currentOffers;
 };
 
 const removeFavorites = (offerId, currentFavorites) => {
@@ -37,6 +37,7 @@ const initialState = {
   userName: ``,
   isFavoritesLoaded: false,
   favorites: [],
+  avatarUrl: avatar
 };
 
 const reducer = (state = initialState, action) => {
@@ -87,6 +88,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         nearbyOffers: action.payload,
       };
+    case ActionType.CHANGE_USER_AVATAR:
+      return {
+        ...state,
+        avatarUrl: action.payload
+      };
     case ActionType.CHANGE_USER_NAME:
       return {
         ...state,
@@ -101,17 +107,19 @@ const reducer = (state = initialState, action) => {
     case ActionType.ADD_FAVORITES:
       return {
         ...state,
-        favoriteList: addFavorites(action.payload, state.favorites),
+        favorites: addFavorites(action.payload, state.favorites),
       };
     case ActionType.REMOVE_FAVORITES:
       return {
         ...state,
-        favoriteList: removeFavorites(action.payload, state.favorites),
+        favorites: removeFavorites(action.payload, state.favorites),
       };
     case ActionType.TOGGLE_FAVORITE:
       return {
         ...state,
         offers: toggleFavorite(action.payload, state.offers),
+        nearbyOffers: toggleFavorite(action.payload, state.nearbyOffers),
+        offer: Object.assign({}, state.offer, {isFavorite: !state.offer.isFavorite})
       };
     default:
       return state;

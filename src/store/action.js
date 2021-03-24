@@ -1,4 +1,3 @@
-
 export const ActionType = {
   CHANGE_CITY: `main/changeCity`,
   SET_ACTIVE_PIN: `main/setActivePin`,
@@ -10,6 +9,7 @@ export const ActionType = {
   SET_NEARBY_OFFERS: `data/setNearbyOffers`,
   REQUIRED_AUTHORIZATION: `data/requiredAuthorization`,
   CHANGE_USER_NAME: `user/changeUserName`,
+  CHANGE_USER_AVATAR: `user/changeUserAvatar`,
   SET_FAVORITES: `data/setFavorites`,
   ADD_FAVORITES: `data/addFavorites`,
   REMOVE_FAVORITES: `data/removeFavorites`,
@@ -53,6 +53,10 @@ export const ActionCreator = {
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status
   }),
+  changeUserAvatar: (avatarUrl) => ({
+    type: ActionType.CHANGE_USER_AVATAR,
+    payload: avatarUrl
+  }),
   changeUserName: (userName) => ({
     type: ActionType.CHANGE_USER_NAME,
     payload: userName
@@ -69,9 +73,9 @@ export const ActionCreator = {
     type: ActionType.REMOVE_FAVORITES,
     payload: id
   }),
-  toggleFavorite: (offerId) => ({
+  toggleFavorite: (id) => ({
     type: ActionType.TOGGLE_FAVORITE,
-    payload: offerId
+    payload: id
   }),
   redirectToRoute: (url) => ({
     type: ActionType.REDIRECT_TO_ROUTE,

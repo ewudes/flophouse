@@ -1,19 +1,19 @@
 import React, {useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import Header from '../../components/header/header';
 import PropTypes from 'prop-types';
 import {offerProps} from '../../components/prop-types/prop-types';
 import FavoritesItems from '../../components/favorites-items/favorites-items';
-import {CITIES} from '../../const';
+import {CITIES, AppRoute} from '../../const';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 import {fetchFavorites} from './../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 
 const Favorites = ({
-  offers,
-  userName,
+  favorites,
   isFavoritesLoaded,
-  setFavorites
+  setFavorites,
 }) => {
   useEffect(() => {
     if (!isFavoritesLoaded) {
@@ -29,7 +29,7 @@ const Favorites = ({
 
   return (
     <div className="page">
-      <Header userName={userName}/>
+      <Header/>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
@@ -37,7 +37,7 @@ const Favorites = ({
             <ul className="favorites__list">
 
               {CITIES.map((city, index) => {
-                const filtered = offers.filter((offer) => offer.city.name === city && offer.isFavorite);
+                const filtered = favorites.filter((offer) => offer.city.name === city && offer.isFavorite);
                 return filtered.length < 1 ? `` : <FavoritesItems city={city} offers={filtered} key={index} />;
               })}
 
@@ -46,16 +46,16 @@ const Favorites = ({
         </div>
       </main>
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <Link className="footer__logo-link" to={AppRoute.MAIN}>
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-        </a>
+        </Link>
       </footer>
     </div>
   );
 };
 
-const mapStateToProps = ({offers, isFavoritesLoaded}) => ({
-  offers,
+const mapStateToProps = ({favorites, isFavoritesLoaded}) => ({
+  favorites,
   isFavoritesLoaded,
 });
 
@@ -69,8 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Favorites.propTypes = {
-  offers: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape(offerProps)), PropTypes.array]).isRequired,
-  userName: PropTypes.string,
+  favorites: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape(offerProps)), PropTypes.array]).isRequired,
   isFavoritesLoaded: PropTypes.bool.isRequired,
   setFavorites: PropTypes.func.isRequired
 };

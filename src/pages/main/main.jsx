@@ -14,7 +14,6 @@ import Spinner from '../../components/spinner/spinner';
 const Main = ({
   offers,
   city,
-  userName,
   isDataLoaded,
   onLoadData
 }) => {
@@ -32,7 +31,7 @@ const Main = ({
 
   return (
     <div className="page page--gray page--main">
-      <Header userName={userName}/>
+      <Header />
       <main className={`page__main page__main--index ${!offers.length && `page__main--index-empty`}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
@@ -67,7 +66,6 @@ const mapDispatchToProps = (dispatch) => ({
 Main.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
   city: PropTypes.string.isRequired,
-  userName: PropTypes.string,
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
 };
