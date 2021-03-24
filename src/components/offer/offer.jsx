@@ -28,11 +28,11 @@ const CARD_TYPES = {
   },
   offer: {
     articleClassName: `near-places__card`,
-    infoClass: ``,
+    infoClassName: null,
     img: {
       className: `near-places`,
-      width: 260,
-      height: 200,
+      width: `260`,
+      height: `200`,
     },
   }
 };
@@ -49,7 +49,7 @@ const Offer = ({
   id,
   setActivePin,
   deleteActivePin,
-  onFavorite
+  onFavorite,
 }) => {
   const cardType = CARD_TYPES[cardOption];
 
@@ -119,7 +119,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onFavorite(id, isFavorite) {
     dispatch(toggleFavorite(id, isFavorite));
-  }
+  },
 });
 
 Offer.propTypes = {...offerProps};
