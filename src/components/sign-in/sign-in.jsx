@@ -7,7 +7,7 @@ import {AuthorizationStatus, AppRoute} from '../../const';
 const SignIn = ({authorizationStatus, userName, avatarUrl}) => {
   return authorizationStatus === AuthorizationStatus.AUTH ?
     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>
-      <div className="header__avatar-wrapper user__avatar-wrapper" style={{backgroundImage: `url(${avatarUrl})`}}>
+      <div className="header__avatar-wrapper user__avatar-wrapper" style={{backgroundImage: `url(${avatarUrl})`, borderRadius: `50%`}}>
       </div>
       <span className="header__user-name user__name">{userName}</span>
     </Link> :
