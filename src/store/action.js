@@ -1,8 +1,20 @@
 export const ActionType = {
-  CHANGE_CITY: `changeCity`,
-  SET_ACTIVE_PIN: `setActivePin`,
-  DELETE_ACTIVE_PIN: `deleteActivePin`,
-  CHANGE_SORT: `changeSort`
+  CHANGE_CITY: `main/changeCity`,
+  SET_ACTIVE_PIN: `main/setActivePin`,
+  DELETE_ACTIVE_PIN: `main/deleteActivePin`,
+  CHANGE_SORT: `main/changeSort`,
+  LOAD_OFFERS: `data/loadOffers`,
+  SET_OFFER: `data/setOffer`,
+  SET_REVIEWS: `data/setReviews`,
+  SET_NEARBY_OFFERS: `data/setNearbyOffers`,
+  REQUIRED_AUTHORIZATION: `data/requiredAuthorization`,
+  CHANGE_USER_NAME: `user/changeUserName`,
+  CHANGE_USER_AVATAR: `user/changeUserAvatar`,
+  SET_FAVORITES: `data/setFavorites`,
+  ADD_FAVORITES: `data/addFavorites`,
+  REMOVE_FAVORITES: `data/removeFavorites`,
+  TOGGLE_FAVORITE: `data/toggleFavorite`,
+  REDIRECT_TO_ROUTE: `login/redirectToRoute`
 };
 
 export const ActionCreator = {
@@ -21,4 +33,52 @@ export const ActionCreator = {
     type: ActionType.CHANGE_SORT,
     payload: currentSort
   }),
+  loadOffers: (offers) => ({
+    type: ActionType.LOAD_OFFERS,
+    payload: offers
+  }),
+  setOffer: (offer) => ({
+    type: ActionType.SET_OFFER,
+    payload: offer
+  }),
+  setReviews: (reviews) => ({
+    type: ActionType.SET_REVIEWS,
+    payload: reviews
+  }),
+  setNearbyOffers: (nearbyOffers) => ({
+    type: ActionType.SET_NEARBY_OFFERS,
+    payload: nearbyOffers
+  }),
+  requiredAuthorization: (status) => ({
+    type: ActionType.REQUIRED_AUTHORIZATION,
+    payload: status
+  }),
+  changeUserAvatar: (avatarUrl) => ({
+    type: ActionType.CHANGE_USER_AVATAR,
+    payload: avatarUrl
+  }),
+  changeUserName: (userName) => ({
+    type: ActionType.CHANGE_USER_NAME,
+    payload: userName
+  }),
+  setFavorites: (favorites) => ({
+    type: ActionType.SET_FAVORITES,
+    payload: favorites
+  }),
+  addFavorites: (favoriteOffer) => ({
+    type: ActionType.ADD_FAVORITES,
+    payload: favoriteOffer
+  }),
+  removeFavorites: (id) => ({
+    type: ActionType.REMOVE_FAVORITES,
+    payload: id
+  }),
+  toggleFavorite: (id) => ({
+    type: ActionType.TOGGLE_FAVORITE,
+    payload: id
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url
+  })
 };

@@ -64,6 +64,5 @@ Sort.propTypes = {
   currentSort: PropTypes.string.isRequired
 };
 
-
 export {Sort};
 export default connect(mapStateToProps, mapDispatchToProps)(Sort);

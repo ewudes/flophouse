@@ -1,31 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import Main from '../../pages/main/main';
 import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';
 import Offer from '../../pages/offer/offer';
 import PageNotFound from '../../pages/not-found/not-found';
-import {reviewProps} from '../prop-types/prop-types';
+import {AppRoute} from '../../const';
+import PrivateRoute from '../private-route/private-route';
+import browserHistory from '../../browser-history';
 
-const App = ({
-  reviews
-}) => {
+const App = () => {
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path="/login">
-          <Login />
+        <PrivateRoute exact path={AppRoute.LOGIN} render={()=> <Login />} />
+        <Route exact path={AppRoute.OFFER}>
+          <Offer />
         </Route>
-        <Route exact path="/offer/:id"
-          render={(props) => <Offer reviews={reviews} {...props} />}
-        >
-        </Route>
-        <Route exact path="/favorites">
-          <Favorites />
-        </Route>
-        <Route exact path="/">
+        <PrivateRoute exact path={AppRoute.FAVORITES} render={() => <Favorites />} />
+        <Route exact path={AppRoute.MAIN}>
           <Main />
         </Route>
         <Route>
@@ -34,10 +28,6 @@ const App = ({
       </Switch>
     </BrowserRouter>
   );
-};
-
-App.propTypes = {
-  reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
 };
 
 export default App;

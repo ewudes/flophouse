@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {Redirect} from 'react-router-dom';
+import {useRouteMatch} from 'react-router-dom';
 import Header from '../../components/header/header';
 import ReviewList from '../../components/reviews-list/reviews-list';
 import ReviewForm from '../../components/review-form/review-form';
@@ -8,19 +8,32 @@ import NearPlaces from '../../components/near-places-list/near-places-list';
 import {offerProps, reviewProps} from '../../components/prop-types/prop-types';
 import Map from '../../components/map/map';
 import {connect} from "react-redux";
+import {fetchOfferData, toggleFavorite} from '../../store/api-actions';
+import Spinner from '../../components/spinner/spinner';
 
 const FACTOR = 20;
 
-const getCurrentOffer = (id, offers) => offers.find((item) => Number(id) === item.id);
+const Offer = ({
+  offer,
+  reviews,
+  city,
+  nearbyOffers,
+  setOfferData,
+  onFavorite,
+}) => {
+  const match = useRouteMatch();
+  const id = match.params.id;
 
-const Offer = ({offers, reviews, city, ...props}) => {
-  const id = props.match.params.id;
-  const offer = getCurrentOffer(id, offers);
+  useEffect(() => {
+    if (String(offer.id) !== id) {
+      setOfferData(id);
+    }
+  }, [id]);
 
-  const setNearPlaces = (places, count) => places.slice(0, count);
-
-  if (!offer) {
-    return <Redirect to="/404" />;
+  if (String(offer.id) !== id) {
+    return (
+      <Spinner />
+    );
   }
 
   const {
@@ -38,6 +51,12 @@ const Offer = ({offers, reviews, city, ...props}) => {
     description,
   } = offer;
 
+  const handleClickFavorite = () => {
+    const newStatus = Number(!isFavorite);
+    onFavorite(id, newStatus);
+
+  };
+
   return (
     <div className="page">
       <Header />
@@ -45,7 +64,7 @@ const Offer = ({offers, reviews, city, ...props}) => {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image, index) => (
+              {images.slice(0, 6).map((image, index) => (
                 <div className="property__image-wrapper" key={index}>
                   <img className="property__image" src={image} alt="Photo studio" />
                 </div>
@@ -59,7 +78,11 @@ const Offer = ({offers, reviews, city, ...props}) => {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className={`property__bookmark-button button${isFavorite && ` property__bookmark-button--active` || ``}`} type="button">
+                <button
+                  className={`property__bookmark-button button${isFavorite && ` property__bookmark-button--active` || ``}`}
+                  type="button"
+                  onClick={handleClickFavorite}
+                >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -124,7 +147,7 @@ const Offer = ({offers, reviews, city, ...props}) => {
           </div>
           <section className="property__map map">
             <Map
-              points={setNearPlaces(offers, 3)}
+              points={nearbyOffers}
               city={city}
             />
           </section>
@@ -132,7 +155,7 @@ const Offer = ({offers, reviews, city, ...props}) => {
         <div className="container">
           <section className="near-places places">
             <NearPlaces
-              nearPlaces={setNearPlaces(offers, 3)}
+              nearPlaces={nearbyOffers}
             />
           </section>
         </div>
@@ -141,22 +164,30 @@ const Offer = ({offers, reviews, city, ...props}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  offers: state.offers,
-  city: state.city
+const mapStateToProps = ({city, reviews, offer, nearbyOffers}) => ({
+  offer,
+  city,
+  reviews,
+  nearbyOffers,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setOfferData(id) {
+    dispatch(fetchOfferData(id));
+  },
+  onFavorite(id, isFavorite) {
+    dispatch(toggleFavorite(id, isFavorite));
+  },
 });
 
 Offer.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
+  offer: PropTypes.oneOfType([PropTypes.shape(offerProps), PropTypes.object]).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
   city: PropTypes.string.isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      experiment: PropTypes.string,
-      id: PropTypes.string,
-    }),
-  }).isRequired,
+  setOfferData: PropTypes.func.isRequired,
+  nearbyOffers: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape(offerProps)), PropTypes.array]).isRequired,
+  onFavorite: PropTypes.func.isRequired,
 };
 
 export {Offer};
-export default connect(mapStateToProps, null)(Offer);
+export default connect(mapStateToProps, mapDispatchToProps)(Offer);
