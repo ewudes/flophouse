@@ -1,7 +1,7 @@
 import {ActionCreator} from "./action";
 import {AuthorizationStatus, ApiRoute, AppRoute, HTTP_CODE, avatar} from './../const';
 import {adaptOfferToClient, adaptReviewsToClient} from "./adapters";
-import {sortOffers} from "../utils";
+import {sortOffers, sortDate} from "../utils";
 
 export const fetchOfferList = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.HOTELS)
@@ -72,6 +72,26 @@ export const toggleFavorite = (id, status) => (dispatch, _getState, api) => (
         dispatch(ActionCreator.removeFavorites(adaptedOffer.id));
       }
 
+    })
+    .catch((err) => {
+      const {response} = err;
+      switch (response.status) {
+        case HTTP_CODE.UNAUTHORIZED:
+          dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN));
+          dispatch(ActionCreator.changeUserAvatar(avatar));
+          break;
+
+        default:
+          throw err;
+      }
+    })
+);
+
+export const submitReview = (id, {review: comment, rating}) => (dispatch, _getState, api) => (
+  api.post(`${ApiRoute.COMMENTS}/${id}`, {comment, rating})
+    .then(({data}) => {
+      const sortedComments = data.sort(sortDate);
+      dispatch(ActionCreator.setReviews(sortedComments.map((item) => adaptReviewsToClient(item))));
     })
     .catch((err) => {
       const {response} = err;

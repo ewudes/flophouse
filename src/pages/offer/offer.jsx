@@ -10,6 +10,7 @@ import Map from '../../components/map/map';
 import {connect} from "react-redux";
 import {fetchOfferData, toggleFavorite} from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
+import {AuthorizationStatus} from '../../const';
 
 const FACTOR = 20;
 
@@ -20,6 +21,7 @@ const Offer = ({
   nearbyOffers,
   setOfferData,
   onFavorite,
+  authorizationStatus
 }) => {
   const match = useRouteMatch();
   const id = match.params.id;
@@ -141,7 +143,7 @@ const Offer = ({
                 <ReviewList
                   reviews={reviews}
                 />
-                <ReviewForm/>
+                {authorizationStatus === AuthorizationStatus.AUTH && <ReviewForm/>}
               </section>
             </div>
           </div>
@@ -164,11 +166,12 @@ const Offer = ({
   );
 };
 
-const mapStateToProps = ({city, reviews, offer, nearbyOffers}) => ({
+const mapStateToProps = ({city, reviews, offer, nearbyOffers, authorizationStatus}) => ({
   offer,
   city,
   reviews,
   nearbyOffers,
+  authorizationStatus
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -187,6 +190,7 @@ Offer.propTypes = {
   setOfferData: PropTypes.func.isRequired,
   nearbyOffers: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape(offerProps)), PropTypes.array]).isRequired,
   onFavorite: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 export {Offer};
