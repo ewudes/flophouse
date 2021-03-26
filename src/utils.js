@@ -14,3 +14,7 @@ export const sortOffers = (currentSort, offers) => {
       return offers;
   }
 };
+
+export const sortDate = (a, b) => (
+  Date.parse(a.date) - Date.parse(b.date)
+);
