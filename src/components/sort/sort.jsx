@@ -2,10 +2,10 @@ import React, {useRef} from 'react';
 import {connect} from 'react-redux';
 
 import {PropTypes} from 'prop-types';
-import {ActionCreator} from '../../store/action';
+import {changeSort} from '../../store/action';
 import {SortList} from '../../const';
 
-const Sort = ({changeSort, currentSort}) => {
+const Sort = ({onChangeSort, currentSort}) => {
   const selectRef = useRef();
 
   const handleClickSelect = () => {
@@ -13,7 +13,7 @@ const Sort = ({changeSort, currentSort}) => {
   };
 
   const handleClickSortType = (evt) => {
-    changeSort(evt.currentTarget.dataset.sortType);
+    onChangeSort(evt.currentTarget.dataset.sortType);
     selectRef.current.classList.remove(`places__options--opened`);
   };
 
@@ -50,8 +50,8 @@ const Sort = ({changeSort, currentSort}) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  changeSort(currentSort) {
-    dispatch(ActionCreator.changeSort(currentSort));
+  onChangeSort(currentSort) {
+    dispatch(changeSort(currentSort));
   }
 });
 
@@ -60,7 +60,7 @@ const mapStateToProps = (state) => ({
 });
 
 Sort.propTypes = {
-  changeSort: PropTypes.func.isRequired,
+  onChangeSort: PropTypes.func.isRequired,
   currentSort: PropTypes.string.isRequired
 };
 

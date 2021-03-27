@@ -10,6 +10,7 @@ import {filterOffersByCity} from "../../utils";
 import {sortOffers} from '../../utils';
 import {fetchOfferList} from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
+import ErrorMessage from '../../components/error-message/error-message';
 
 const Main = ({
   offers,
@@ -31,6 +32,7 @@ const Main = ({
 
   return (
     <div className="page page--gray page--main">
+      <ErrorMessage/>
       <Header />
       <main className={`page__main page__main--index ${!offers.length && `page__main--index-empty`}`}>
         <h1 className="visually-hidden">Cities</h1>

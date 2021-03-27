@@ -8,9 +8,10 @@ import NearPlaces from '../../components/near-places-list/near-places-list';
 import {offerProps, reviewProps} from '../../components/prop-types/prop-types';
 import Map from '../../components/map/map';
 import {connect} from "react-redux";
-import {fetchOfferData, toggleFavorite} from '../../store/api-actions';
+import {fetchOfferData, onToggleFavorite} from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 import {isAuthorized} from '../../utils';
+import ErrorMessage from '../../components/error-message/error-message';
 
 const FACTOR = 20;
 
@@ -61,6 +62,7 @@ const Offer = ({
 
   return (
     <div className="page">
+      <ErrorMessage/>
       <Header />
       <main className="page__main page__main--property">
         <section className="property">
@@ -179,7 +181,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchOfferData(id));
   },
   onFavorite(id, isFavorite) {
-    dispatch(toggleFavorite(id, isFavorite));
+    dispatch(onToggleFavorite(id, isFavorite));
   },
 });
 

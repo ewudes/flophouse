@@ -6,9 +6,10 @@ import {offerProps} from '../../components/prop-types/prop-types';
 import FavoritesItems from '../../components/favorites-items/favorites-items';
 import {cities, AppRoute} from '../../const';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
+import {changeCity} from '../../store/action';
 import {fetchFavorites} from './../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
+import ErrorMessage from '../../components/error-message/error-message';
 
 const Favorites = ({
   favorites,
@@ -29,6 +30,7 @@ const Favorites = ({
 
   return (
     <div className="page">
+      <ErrorMessage/>
       <Header/>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
@@ -61,7 +63,7 @@ const mapStateToProps = ({favorites, isFavoritesLoaded}) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   changeCity(city) {
-    dispatch(ActionCreator.changeCity(city));
+    dispatch(changeCity(city));
   },
   setFavorites() {
     dispatch(fetchFavorites());

@@ -37,7 +37,8 @@ const initialState = {
   userName: ``,
   isFavoritesLoaded: false,
   favorites: [],
-  avatarUrl: AVATAR
+  avatarUrl: AVATAR,
+  errorMessage: ``,
 };
 
 const reducer = (state = initialState, action) => {
@@ -120,6 +121,11 @@ const reducer = (state = initialState, action) => {
         offers: toggleFavorite(action.payload, state.offers),
         nearbyOffers: toggleFavorite(action.payload, state.nearbyOffers),
         offer: Object.assign({}, state.offer, {isFavorite: !state.offer.isFavorite})
+      };
+    case ActionType.SET_ERROR_MESSAGE:
+      return {
+        ...state,
+        errorMessage: String(action.payload)
       };
     default:
       return state;

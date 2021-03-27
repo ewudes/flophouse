@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {offerProps} from '../prop-types/prop-types';
-import {ActionCreator} from '../../store/action';
+import {setActivePin, deleteActivePin} from '../../store/action';
 import {connect} from 'react-redux';
-import {toggleFavorite} from '../../store/api-actions';
+import {onToggleFavorite} from '../../store/api-actions';
 
 const FACTOR = 20;
 
@@ -47,18 +47,18 @@ const Offer = ({
   type,
   cardOption,
   id,
-  setActivePin,
-  deleteActivePin,
+  onSetActivePin,
+  onDeleteActivePin,
   onFavorite,
 }) => {
   const cardType = CARD_TYPES[cardOption];
 
   const handleMouseOver = () => {
-    setActivePin(id);
+    onSetActivePin(id);
   };
 
   const handleMouseLeave = () => {
-    deleteActivePin();
+    onDeleteActivePin();
   };
 
   const handleFavoriteClick = () => {
@@ -111,14 +111,14 @@ const Offer = ({
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  setActivePin(id) {
-    dispatch(ActionCreator.setActivePin(id));
+  onSetActivePin(id) {
+    dispatch(setActivePin(id));
   },
-  deleteActivePin() {
-    dispatch(ActionCreator.deleteActivePin());
+  onDeleteActivePin() {
+    dispatch(deleteActivePin());
   },
   onFavorite(id, isFavorite) {
-    dispatch(toggleFavorite(id, isFavorite));
+    dispatch(onToggleFavorite(id, isFavorite));
   },
 });
 

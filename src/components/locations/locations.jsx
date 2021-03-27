@@ -1,12 +1,12 @@
 import React from 'react';
 import {cities} from '../../const';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
+import {changeCity} from '../../store/action';
 import {PropTypes} from 'prop-types';
 
-const Locations = ({changeCity, city}) => {
+const Locations = ({onChangeCity, city}) => {
   const handleClickTabs = (currentCity) => {
-    changeCity(currentCity);
+    onChangeCity(currentCity);
   };
 
   return (
@@ -23,8 +23,8 @@ const Locations = ({changeCity, city}) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  changeCity(city) {
-    dispatch(ActionCreator.changeCity(city));
+  onChangeCity(city) {
+    dispatch(changeCity(city));
   }
 });
 
@@ -33,7 +33,7 @@ const mapStateToProps = ({city}) => ({
 });
 
 Locations.propTypes = {
-  changeCity: PropTypes.func.isRequired,
+  onChangeCity: PropTypes.func.isRequired,
   city: PropTypes.string.isRequired
 };
 
