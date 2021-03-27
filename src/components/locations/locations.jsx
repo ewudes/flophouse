@@ -1,5 +1,5 @@
 import React from 'react';
-import {CITIES} from '../../const';
+import {cities} from '../../const';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 import {PropTypes} from 'prop-types';
@@ -12,7 +12,7 @@ const Locations = ({changeCity, city}) => {
   return (
     <section className="locations container">
       <ul className="locations__list tabs__list" >
-        {CITIES.map((item) => <li key={item} className="locations__item">
+        {cities.map((item) => <li key={item} className="locations__item">
           <a className={`locations__item-link tabs__item ${item === city ? `tabs__item--active` : ``}`} href="#">
             <span onClick={() => handleClickTabs(item)}>{item}</span>
           </a>

@@ -10,7 +10,7 @@ import Map from '../../components/map/map';
 import {connect} from "react-redux";
 import {fetchOfferData, toggleFavorite} from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
-import {AuthorizationStatus} from '../../const';
+import {isAuthorized} from '../../utils';
 
 const FACTOR = 20;
 
@@ -143,7 +143,7 @@ const Offer = ({
                 <ReviewList
                   reviews={reviews}
                 />
-                {authorizationStatus === AuthorizationStatus.AUTH && <ReviewForm/>}
+                {isAuthorized(authorizationStatus) && <ReviewForm/>}
               </section>
             </div>
           </div>

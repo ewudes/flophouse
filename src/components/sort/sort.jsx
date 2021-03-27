@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import {PropTypes} from 'prop-types';
 import {ActionCreator} from '../../store/action';
-import {SORT_LIST} from '../../const';
+import {SortList} from '../../const';
 
 const Sort = ({changeSort, currentSort}) => {
   const selectRef = useRef();
@@ -25,14 +25,14 @@ const Sort = ({changeSort, currentSort}) => {
         tabIndex="0"
         onClick={handleClickSelect}
       >
-        {SORT_LIST.find(({type}) => (type === currentSort)).text}
+        {SortList.find(({type}) => (type === currentSort)).text}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref={`#icon-arrow-select`}></use>
         </svg>
       </span>
       <ul className="places__options places__options--custom" ref={selectRef}>
         {
-          SORT_LIST.map(({text, type}) =>
+          SortList.map(({text, type}) =>
             <li
               key={type}
               className={`places__option ${currentSort === type ? `places__option--active` : ``}`}

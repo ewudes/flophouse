@@ -1,5 +1,5 @@
 import {ActionType} from "./action";
-import {AuthorizationStatus, SORT_TYPES, avatar} from "../const";
+import {AuthorizationStatus, SortType, AVATAR} from "../const";
 
 const getItem = (list, id) => {
   const listId = list.map((item) => item.id);
@@ -29,7 +29,7 @@ const initialState = {
   offers: [],
   offer: {},
   activeOffer: false,
-  currentSort: SORT_TYPES.POPULAR,
+  currentSort: SortType.POPULAR,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isDataLoaded: false,
   reviews: [],
@@ -37,7 +37,7 @@ const initialState = {
   userName: ``,
   isFavoritesLoaded: false,
   favorites: [],
-  avatarUrl: avatar
+  avatarUrl: AVATAR
 };
 
 const reducer = (state = initialState, action) => {

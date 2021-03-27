@@ -1,7 +1,7 @@
 import {ActionCreator} from "./action";
-import {AuthorizationStatus, ApiRoute, AppRoute, HTTP_CODE, avatar} from './../const';
+import {AuthorizationStatus, ApiRoute, AppRoute, HttpCode, AVATAR} from './../const';
 import {adaptOfferToClient, adaptReviewsToClient} from "./adapters";
-import {sortOffers, sortDate} from "../utils";
+import {sortOffers, compareDates} from "../utils";
 
 export const fetchOfferList = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.HOTELS)
@@ -23,7 +23,7 @@ export const fetchOfferData = (id) => (dispatch, _getState, api) => (
     .catch((err) => {
       const {response} = err;
       switch (response.status) {
-        case HTTP_CODE.NOT_FOUND:
+        case HttpCode.NOT_FOUND:
           dispatch(ActionCreator.redirectToRoute(AppRoute.NOT_FOUND));
           break;
 
@@ -76,9 +76,9 @@ export const toggleFavorite = (id, status) => (dispatch, _getState, api) => (
     .catch((err) => {
       const {response} = err;
       switch (response.status) {
-        case HTTP_CODE.UNAUTHORIZED:
+        case HttpCode.UNAUTHORIZED:
           dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN));
-          dispatch(ActionCreator.changeUserAvatar(avatar));
+          dispatch(ActionCreator.changeUserAvatar(AVATAR));
           break;
 
         default:
@@ -90,15 +90,15 @@ export const toggleFavorite = (id, status) => (dispatch, _getState, api) => (
 export const submitReview = (id, {review: comment, rating}) => (dispatch, _getState, api) => (
   api.post(`${ApiRoute.COMMENTS}/${id}`, {comment, rating})
     .then(({data}) => {
-      const sortedComments = data.sort(sortDate);
+      const sortedComments = data.sort(compareDates);
       dispatch(ActionCreator.setReviews(sortedComments.map((item) => adaptReviewsToClient(item))));
     })
     .catch((err) => {
       const {response} = err;
       switch (response.status) {
-        case HTTP_CODE.UNAUTHORIZED:
+        case HttpCode.UNAUTHORIZED:
           dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN));
-          dispatch(ActionCreator.changeUserAvatar(avatar));
+          dispatch(ActionCreator.changeUserAvatar(AVATAR));
           break;
 
         default:

@@ -4,7 +4,7 @@ import Header from '../../components/header/header';
 import PropTypes from 'prop-types';
 import {offerProps} from '../../components/prop-types/prop-types';
 import FavoritesItems from '../../components/favorites-items/favorites-items';
-import {CITIES, AppRoute} from '../../const';
+import {cities, AppRoute} from '../../const';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 import {fetchFavorites} from './../../store/api-actions';
@@ -36,7 +36,7 @@ const Favorites = ({
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
 
-              {CITIES.map((city, index) => {
+              {cities.map((city, index) => {
                 const filtered = favorites.filter((offer) => offer.city.name === city && offer.isFavorite);
                 return filtered.length < 1 ? `` : <FavoritesItems city={city} offers={filtered} key={index} />;
               })}
