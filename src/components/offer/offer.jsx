@@ -100,7 +100,8 @@ const Offer = ({
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: FACTOR * rating + `%`}}></span>
+            <span style={{width: FACTOR * Math.round(rating) + `%`}}></span>
+
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

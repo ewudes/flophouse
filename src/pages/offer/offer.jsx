@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useRouteMatch} from 'react-router-dom';
 import Header from '../../components/header/header';
 import ReviewList from '../../components/reviews-list/reviews-list';
@@ -21,9 +21,13 @@ const Offer = () => {
   const match = useRouteMatch();
   const pathId = match.params.id;
 
-  if (String(offer.id) !== pathId) {
-    dispatch(fetchOfferData(pathId));
+  useEffect(() => {
+    if (String(offer.id) !== pathId) {
+      dispatch(fetchOfferData(pathId));
+    }
+  }, [pathId]);
 
+  if (String(offer.id) !== pathId) {
     return (
       <Spinner />
     );
@@ -86,7 +90,7 @@ const Offer = () => {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: FACTOR * rating + `%`}}></span>
+                  <span style={{width: FACTOR * Math.round(rating) + `%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
