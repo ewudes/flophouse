@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import Header from '../../components/header/header';
+import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import PropTypes from 'prop-types';
 import {offerProps} from '../../components/prop-types/prop-types';
 import FavoritesItems from '../../components/favorites-items/favorites-items';
@@ -34,17 +35,21 @@ const Favorites = ({
       <Header/>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
+          {
+            favorites.length ?
+              <section className="favorites">
+                <h1 className="favorites__title">Saved listing</h1>
+                <ul className="favorites__list">
 
-              {cities.map((city, index) => {
-                const filtered = favorites.filter((offer) => offer.city.name === city && offer.isFavorite);
-                return filtered.length < 1 ? `` : <FavoritesItems city={city} offers={filtered} key={index} />;
-              })}
+                  {cities.map((city, index) => {
+                    const filtered = favorites.filter((offer) => offer.city.name === city && offer.isFavorite);
+                    return filtered.length < 1 ? `` : <FavoritesItems city={city} offers={filtered} key={index} />;
+                  })}
 
-            </ul>
-          </section>
+                </ul>
+              </section>
+              : <FavoritesEmpty/>
+          }
         </div>
       </main>
       <footer className="footer container">
