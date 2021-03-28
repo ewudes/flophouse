@@ -10,6 +10,7 @@ export const ActionType = {
   SET_REVIEWS: `data/setReviews`,
   SET_NEARBY_OFFERS: `data/setNearbyOffers`,
   REQUIRED_AUTHORIZATION: `data/requiredAuthorization`,
+  SET_LOADING_REVIEW_STATUS: `data/setLoadingReviewStatus`,
   CHANGE_USER_NAME: `user/changeUserName`,
   CHANGE_USER_AVATAR: `user/changeUserAvatar`,
   SET_FAVORITES: `data/setFavorites`,
@@ -55,6 +56,12 @@ export const setOffer = createAction(ActionType.SET_OFFER, (offer) => {
 export const setReviews = createAction(ActionType.SET_REVIEWS, (reviews) => {
   return {
     payload: reviews
+  };
+});
+
+export const setLoadingReviewStatus = createAction(ActionType.SET_LOADING_REVIEW_STATUS, (status) => {
+  return {
+    payload: status
   };
 });
 

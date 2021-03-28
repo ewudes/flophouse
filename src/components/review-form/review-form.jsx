@@ -1,33 +1,66 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {submitReview} from '../../store/api-actions';
+import {setLoadingReviewStatus} from '../../store/action';
+import {ReviewLoadingStatus, ReviewСharacters} from '../../const';
 
 const ReviewForm = () => {
-  const {offer} = useSelector((state) => state.DATA);
+  const {offer, reviewLoadingStatus} = useSelector((state) => state.DATA);
   const dispatch = useDispatch();
 
-  const [commentForm, setCommentForm] = useState({
+  const {MAX_LENGTH: maxLength, MIN_LENGTH: minLength} = ReviewСharacters;
+
+  const [reviewForm, setReviewForm] = useState({
     review: ``,
     rating: ``
   });
 
-  const {review, rating} = commentForm;
+  const {review, rating} = reviewForm;
 
   const formRef = useRef();
+  const submitButtonRef = useRef();
+  const reviewRef = useRef();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    if (commentForm) {
+    if (reviewForm) {
       dispatch(submitReview(offer.id, {review, rating}));
-      setCommentForm({...commentForm, review: ``, rating: ``});
-      formRef.current.reset();
+      setReviewForm({...reviewForm, review: ``, rating: ``});
+      dispatch(setLoadingReviewStatus(ReviewLoadingStatus.LOADING));
     }
   };
 
   const handleChange = (evt) => {
     const {name, value} = evt.target;
-    setCommentForm({...commentForm, [name]: value});
+    setReviewForm({...reviewForm, [name]: value});
   };
+
+  useEffect(() => {
+    submitButtonRef.current.disabled = !(rating && review.length > minLength && review.length < maxLength);
+  }, [review, rating]);
+
+  useEffect(() => {
+    switch (reviewLoadingStatus) {
+      case ReviewLoadingStatus.LOADING:
+        submitButtonRef.current.disabled = true;
+        reviewRef.current.disabled = true;
+        break;
+
+      case ReviewLoadingStatus.LOADED:
+        reviewRef.current.disabled = false;
+        formRef.current.reset();
+
+        setReviewForm({review: ``, rating: 0});
+        dispatch(setLoadingReviewStatus(``));
+        break;
+
+      case ReviewLoadingStatus.LOADING_FAILED:
+        submitButtonRef.current.disabled = false;
+        reviewRef.current.disabled = false;
+        dispatch(setLoadingReviewStatus(``));
+        break;
+    }
+  }, [reviewLoadingStatus]);
 
   return (
     <form
@@ -75,12 +108,22 @@ const ReviewForm = () => {
           </svg>
         </label>
       </div>
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
+      <textarea
+        className="reviews__textarea form__textarea"
+        id="review"
+        name="review"
+        placeholder="Tell how was your stay, what you like and what can be improved"
+        defaultValue={``}
+        ref={reviewRef}
+        required
+        maxLength={maxLength}
+        minLength={minLength}
+      ></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled ref={submitButtonRef}>Submit</button>
       </div>
     </form>
   );

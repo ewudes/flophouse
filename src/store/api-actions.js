@@ -11,9 +11,17 @@ import {
   toggleFavorite,
   addFavorites,
   removeFavorites,
-  setErrorMessage
+  setErrorMessage,
+  setLoadingReviewStatus,
 } from "./action";
-import {AuthorizationStatus, ApiRoute, AppRoute, HttpCode, AVATAR} from './../const';
+import {
+  AuthorizationStatus,
+  ApiRoute,
+  AppRoute,
+  HttpCode,
+  AVATAR,
+  ReviewLoadingStatus,
+} from './../const';
 import {adaptOfferToClient, adaptReviewsToClient} from "./adapters";
 import {sortOffers, compareDates} from "../utils";
 
@@ -124,6 +132,7 @@ export const submitReview = (id, {review: comment, rating}) => (dispatch, _getSt
     .then(({data}) => {
       const sortedComments = data.sort(compareDates);
       dispatch(setReviews(sortedComments.map((item) => adaptReviewsToClient(item))));
+      dispatch(setLoadingReviewStatus(ReviewLoadingStatus.LOADED));
     })
     .catch((err) => {
       const {response} = err;
@@ -134,7 +143,9 @@ export const submitReview = (id, {review: comment, rating}) => (dispatch, _getSt
           break;
 
         default:
-          throw err;
+          dispatch(setErrorMessage(response.status));
+          dispatch(setLoadingReviewStatus(ReviewLoadingStatus.LOADING_FAILED));
+          break;
       }
     })
 );

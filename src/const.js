@@ -65,3 +65,14 @@ export const StoreKey = {
   EMAIL: `email`,
   AVATAR_URL: `avatarUrl`
 };
+
+export const ReviewСharacters = {
+  MAX_LENGTH: 300,
+  MIN_LENGTH: 50
+};
+
+export const ReviewLoadingStatus = {
+  LOADED: `loaded`,
+  LOADING: `loading`,
+  LOADING_FAILED: `loadingFailed`
+};

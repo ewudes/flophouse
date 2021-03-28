@@ -7,7 +7,8 @@ import {
   setReviews,
   addFavorites,
   removeFavorites,
-  toggleFavorite
+  toggleFavorite,
+  setLoadingReviewStatus
 } from '../action';
 
 const getItem = (list, id) => {
@@ -55,6 +56,10 @@ const data = createReducer(initialState, (builder) => {
 
   builder.addCase(setReviews, (state, action) => {
     state.reviews = action.payload;
+  });
+
+  builder.addCase(setLoadingReviewStatus, (state, action) => {
+    state.reviewLoadingStatus = action.payload;
   });
 
   builder.addCase(setNearbyOffers, (state, action) => {
