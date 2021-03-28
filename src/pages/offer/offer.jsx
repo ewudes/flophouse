@@ -144,6 +144,7 @@ const Offer = () => {
             <Map
               points={nearbyOffers}
               city={city}
+              cardOption={`offer`}
             />
           </section>
         </section>

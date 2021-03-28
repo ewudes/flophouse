@@ -26,6 +26,7 @@ const OfferList = ({
           <Map
             points={currentOffers}
             city={city}
+            cardOption={`main`}
           />
         </section>
       </div>

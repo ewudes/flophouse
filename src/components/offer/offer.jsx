@@ -53,11 +53,15 @@ const Offer = ({
   const cardType = CARD_TYPES[cardOption];
 
   const handleMouseOver = () => {
-    dispatch(setActivePin(id));
+    if (cardOption !== `offer`) {
+      dispatch(setActivePin(id));
+    }
   };
 
   const handleMouseLeave = () => {
-    dispatch(deleteActivePin());
+    if (cardOption !== `offer`) {
+      dispatch(deleteActivePin());
+    }
   };
 
   const handleFavoriteClick = () => {

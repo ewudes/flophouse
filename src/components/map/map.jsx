@@ -9,13 +9,15 @@ const STYLE = {
   height: `100%`
 };
 
-const Map = ({points, city}) => {
+const Map = ({points, city, cardOption}) => {
   if (!points.length) {
     return null;
   }
 
   const mapRef = useRef();
   const {activeOffer} = useSelector((state) => state.MAIN);
+  const {offer} = useSelector((state) => state.DATA);
+
   const cityLocation = points[0].city.location;
 
   useEffect(() => {
@@ -42,8 +44,11 @@ const Map = ({points, city}) => {
   useEffect(() => {
     const pins = [];
     points.forEach((point) => {
+      const isActiveOffer = activeOffer === point.id ? `./img/pin-active.svg` : `./img/pin.svg`;
+      const isOpenedOffer = offer.id === point.id ? `./img/pin-active.svg` : `./img/pin.svg`;
+
       const customIcon = leaflet.icon({
-        iconUrl: `${activeOffer !== point.id ? `./img/pin.svg` : `./img/pin-active.svg`}`,
+        iconUrl: cardOption === `offer` ? isOpenedOffer : isActiveOffer,
         iconSize: [27, 39]
       });
 
@@ -62,7 +67,7 @@ const Map = ({points, city}) => {
     return () => {
       pinsGroup.clearLayers();
     };
-  }, [activeOffer, points]);
+  }, [activeOffer, points, city]);
 
   return (
     <div id="map" style={STYLE} ref={mapRef}></div>
@@ -77,6 +82,7 @@ Map.propTypes = {
     city: PropTypes.objectOf.isRequired,
   })),
   city: PropTypes.string.isRequired,
+  cardOption: PropTypes.string.isRequired
 };
 
 export default Map;
