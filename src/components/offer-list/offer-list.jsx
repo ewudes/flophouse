@@ -7,6 +7,7 @@ import Sort from '../sort/sort';
 
 const OfferList = ({
   currentOffers,
+  sortedOffers,
   city,
 }) => {
 
@@ -17,7 +18,7 @@ const OfferList = ({
         <b className="places__found">{currentOffers.length} places to stay in {city}</b>
         <Sort/>
         <div className="cities__places-list places__list tabs__content">
-          {currentOffers.map((offer) => <Offer cardOption="main" {...offer} key={offer.id} />)}
+          {sortedOffers.map((offer) => <Offer cardOption="main" {...offer} key={offer.id} />)}
         </div>
       </section>
       <div className="cities__right-section">
@@ -34,7 +35,8 @@ const OfferList = ({
 
 OfferList.propTypes = {
   currentOffers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
+  sortedOffers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
   city: PropTypes.string.isRequired
 };
 
-export default OfferList;
+export default React.memo(OfferList);

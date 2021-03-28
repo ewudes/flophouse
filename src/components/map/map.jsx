@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import "leaflet/dist/leaflet.css";
 
@@ -9,12 +9,13 @@ const STYLE = {
   height: `100%`
 };
 
-const Map = ({points, city, activeOffer}) => {
+const Map = ({points, city}) => {
   if (!points.length) {
     return null;
   }
 
   const mapRef = useRef();
+  const {activeOffer} = useSelector((state) => state.MAIN);
   const cityLocation = points[0].city.location;
 
   useEffect(() => {
@@ -68,10 +69,6 @@ const Map = ({points, city, activeOffer}) => {
   );
 };
 
-const mapStateToProps = ({activeOffer}) => ({
-  activeOffer
-});
-
 Map.propTypes = {
   points: PropTypes.arrayOf(PropTypes.shape({
     latitude: PropTypes.number,
@@ -80,8 +77,6 @@ Map.propTypes = {
     city: PropTypes.objectOf.isRequired,
   })),
   city: PropTypes.string.isRequired,
-  activeOffer: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired
 };
 
-export {Map};
-export default connect(mapStateToProps, null)(Map);
+export default Map;

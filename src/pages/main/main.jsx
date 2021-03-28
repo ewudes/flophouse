@@ -1,28 +1,34 @@
 import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
 import Header from '../../components/header/header';
 import Locations from '../../components/locations/locations';
 import OfferList from '../../components/offer-list/offer-list';
 import OfferEmpty from '../../components/offer-empty/offer-empty';
-import {offerProps} from '../../components/prop-types/prop-types';
-import {connect} from 'react-redux';
-import {filterOffersByCity} from "../../utils";
-import {sortOffers} from '../../utils';
+import {useDispatch, useSelector} from 'react-redux';
+import {filterOffersByCity, sortOffers} from '../../utils';
 import {fetchOfferList} from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 import ErrorMessage from '../../components/error-message/error-message';
+import {setActivePin, setOffer} from '../../store/action';
 
-const Main = ({
-  offers,
-  city,
-  isDataLoaded,
-  onLoadData
-}) => {
+const Main = () => {
+  const {city} = useSelector((state) => state.MAIN);
+  const {isDataLoaded} = useSelector((state) => state.DATA);
+  const dispatch = useDispatch();
+  const currentOffers = useSelector(filterOffersByCity);
+  const sortedOffers = useSelector(sortOffers);
+
   useEffect(() => {
     if (!isDataLoaded) {
-      onLoadData();
+      dispatch(fetchOfferList());
     }
   }, [isDataLoaded]);
+
+  useEffect(() => {
+    if (isDataLoaded) {
+      dispatch(setActivePin(``));
+      dispatch(setOffer({}));
+    }
+  }, [city]);
 
   if (!isDataLoaded) {
     return (
@@ -34,16 +40,17 @@ const Main = ({
     <div className="page page--gray page--main">
       <ErrorMessage/>
       <Header />
-      <main className={`page__main page__main--index ${!offers.length && `page__main--index-empty`}`}>
+      <main className={`page__main page__main--index ${!currentOffers.length && `page__main--index-empty`}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <Locations />
         </div>
         <div className="cities">
           {
-            offers.length ?
+            currentOffers.length ?
               <OfferList
-                currentOffers={offers}
+                currentOffers={currentOffers}
+                sortedOffers={sortedOffers}
                 city={city}
               /> :
               <OfferEmpty city={city} />}
@@ -53,24 +60,4 @@ const Main = ({
   );
 };
 
-const mapStateToProps = ({offers, city, currentSort, isDataLoaded}) => ({
-  offers: sortOffers(currentSort, filterOffersByCity(city, offers)),
-  city,
-  isDataLoaded
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData() {
-    dispatch(fetchOfferList());
-  }
-});
-
-Main.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape(offerProps)).isRequired,
-  city: PropTypes.string.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
-  onLoadData: PropTypes.func.isRequired,
-};
-
-export {Main};
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default Main;

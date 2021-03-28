@@ -56,9 +56,9 @@ const Favorites = ({
   );
 };
 
-const mapStateToProps = ({favorites, isFavoritesLoaded}) => ({
-  favorites,
-  isFavoritesLoaded,
+const mapStateToProps = ({DATA}) => ({
+  favorites: DATA.favorites,
+  isFavoritesLoaded: DATA.isFavoritesLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => ({

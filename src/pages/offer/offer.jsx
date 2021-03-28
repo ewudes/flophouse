@@ -1,13 +1,11 @@
-import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import {useRouteMatch} from 'react-router-dom';
 import Header from '../../components/header/header';
 import ReviewList from '../../components/reviews-list/reviews-list';
 import ReviewForm from '../../components/review-form/review-form';
 import NearPlaces from '../../components/near-places-list/near-places-list';
-import {offerProps, reviewProps} from '../../components/prop-types/prop-types';
 import Map from '../../components/map/map';
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from 'react-redux';
 import {fetchOfferData, onToggleFavorite} from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 import {isAuthorized} from '../../utils';
@@ -15,31 +13,24 @@ import ErrorMessage from '../../components/error-message/error-message';
 
 const FACTOR = 20;
 
-const Offer = ({
-  offer,
-  reviews,
-  city,
-  nearbyOffers,
-  setOfferData,
-  onFavorite,
-  authorizationStatus
-}) => {
+const Offer = () => {
+  const {authorizationStatus} = useSelector((state) => state.USER);
+  const {city} = useSelector((state) => state.MAIN);
+  const {offer, nearbyOffers, reviews} = useSelector((state) => state.DATA);
+  const dispatch = useDispatch();
   const match = useRouteMatch();
-  const id = match.params.id;
+  const pathId = match.params.id;
 
-  useEffect(() => {
-    if (String(offer.id) !== id) {
-      setOfferData(id);
-    }
-  }, [id]);
+  if (String(offer.id) !== pathId) {
+    dispatch(fetchOfferData(pathId));
 
-  if (String(offer.id) !== id) {
     return (
       <Spinner />
     );
   }
 
   const {
+    id,
     images,
     isPremium,
     isFavorite,
@@ -56,7 +47,7 @@ const Offer = ({
 
   const handleClickFavorite = () => {
     const newStatus = Number(!isFavorite);
-    onFavorite(id, newStatus);
+    dispatch(onToggleFavorite(id, newStatus));
 
   };
 
@@ -168,32 +159,4 @@ const Offer = ({
   );
 };
 
-const mapStateToProps = ({city, reviews, offer, nearbyOffers, authorizationStatus}) => ({
-  offer,
-  city,
-  reviews,
-  nearbyOffers,
-  authorizationStatus
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  setOfferData(id) {
-    dispatch(fetchOfferData(id));
-  },
-  onFavorite(id, isFavorite) {
-    dispatch(onToggleFavorite(id, isFavorite));
-  },
-});
-
-Offer.propTypes = {
-  offer: PropTypes.oneOfType([PropTypes.shape(offerProps), PropTypes.object]).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
-  city: PropTypes.string.isRequired,
-  setOfferData: PropTypes.func.isRequired,
-  nearbyOffers: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape(offerProps)), PropTypes.array]).isRequired,
-  onFavorite: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-};
-
-export {Offer};
-export default connect(mapStateToProps, mapDispatchToProps)(Offer);
+export default Offer;

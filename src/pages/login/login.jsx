@@ -59,8 +59,8 @@ const Login = ({
   );
 };
 
-const mapStateToProps = ({city}) => ({
-  city
+const mapStateToProps = ({MAIN}) => ({
+  city: MAIN.city,
 });
 
 const mapDispatchToProps = (dispatch) => ({

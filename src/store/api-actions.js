@@ -134,8 +134,7 @@ export const submitReview = (id, {review: comment, rating}) => (dispatch, _getSt
           break;
 
         default:
-          dispatch(setErrorMessage(response.status));
-          break;
+          throw err;
       }
     })
 );

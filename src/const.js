@@ -9,21 +9,28 @@ export const SortType = {
   TOP_RATED: `top-rated`
 };
 
+export const SortText = {
+  [SortType.POPULAR]: `Popular`,
+  [SortType.LOW_PRICE]: `Price: low to high`,
+  [SortType.HIGH_PRICE]: `Price: high to low`,
+  [SortType.TOP_RATED]: `Top rated first`,
+};
+
 export const SortList = [
   {
-    text: `Popular`,
+    text: SortText[SortType.POPULAR],
     type: SortType.POPULAR
   },
   {
-    text: `Price: low to high`,
+    text: SortText[SortType.LOW_PRICE],
     type: SortType.LOW_PRICE
   },
   {
-    text: `Price: high to low`,
+    text: SortText[SortType.HIGH_PRICE],
     type: SortType.HIGH_PRICE
   },
   {
-    text: `Top rated first`,
+    text: SortText[SortType.TOP_RATED],
     type: SortType.TOP_RATED
   },
 ];

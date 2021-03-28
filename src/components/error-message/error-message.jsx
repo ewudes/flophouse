@@ -1,14 +1,16 @@
 import React from 'react';
-import {PropTypes} from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setErrorMessage} from '../../store/action';
 
 const SHOW_TIME = 5000;
 
-const ErrorMessage = ({errorMessage, removeErrorMessage}) => {
+const ErrorMessage = () => {
+  const {errorMessage} = useSelector((state) => state.USER);
+  const dispatch = useDispatch();
+
   if (errorMessage.length) {
     setTimeout(() => {
-      removeErrorMessage(``);
+      dispatch(setErrorMessage(``));
     }, SHOW_TIME);
   }
   return (
@@ -17,19 +19,5 @@ const ErrorMessage = ({errorMessage, removeErrorMessage}) => {
     </div>
   );
 };
-ErrorMessage.propTypes = {
-  errorMessage: PropTypes.string.isRequired,
-  removeErrorMessage: PropTypes.func.isRequired
-};
-const mapStateToProps = ({errorMessage}) => ({
-  errorMessage
-});
 
-const mapDispatchToProps = (dispatch) => ({
-  removeErrorMessage(message) {
-    dispatch(setErrorMessage(message));
-  }
-});
-
-export {ErrorMessage};
-export default connect(mapStateToProps, mapDispatchToProps)(ErrorMessage);
+export default ErrorMessage;

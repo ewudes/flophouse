@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {offerProps} from '../prop-types/prop-types';
 import {setActivePin, deleteActivePin} from '../../store/action';
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {onToggleFavorite} from '../../store/api-actions';
 
 const FACTOR = 20;
@@ -47,23 +47,22 @@ const Offer = ({
   type,
   cardOption,
   id,
-  onSetActivePin,
-  onDeleteActivePin,
-  onFavorite,
 }) => {
+  const dispatch = useDispatch();
+
   const cardType = CARD_TYPES[cardOption];
 
   const handleMouseOver = () => {
-    onSetActivePin(id);
+    dispatch(setActivePin(id));
   };
 
   const handleMouseLeave = () => {
-    onDeleteActivePin();
+    dispatch(deleteActivePin());
   };
 
   const handleFavoriteClick = () => {
     const newStatus = Number(!isFavorite);
-    onFavorite(id, newStatus);
+    dispatch(onToggleFavorite(id, newStatus));
   };
 
   return (
@@ -110,19 +109,6 @@ const Offer = ({
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onSetActivePin(id) {
-    dispatch(setActivePin(id));
-  },
-  onDeleteActivePin() {
-    dispatch(deleteActivePin());
-  },
-  onFavorite(id, isFavorite) {
-    dispatch(onToggleFavorite(id, isFavorite));
-  },
-});
-
 Offer.propTypes = {...offerProps};
 
-export {Offer};
-export default connect(null, mapDispatchToProps)(Offer);
+export default React.memo(Offer);

@@ -1,10 +1,11 @@
 import React, {useState, useRef} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {submitReview} from '../../store/api-actions';
-import {offerProps} from '../prop-types/prop-types';
 
-const ReviewForm = ({offer, onSubmitReview}) => {
+const ReviewForm = () => {
+  const {offer} = useSelector((state) => state.DATA);
+  const dispatch = useDispatch();
+
   const [commentForm, setCommentForm] = useState({
     review: ``,
     rating: ``
@@ -17,7 +18,7 @@ const ReviewForm = ({offer, onSubmitReview}) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (commentForm) {
-      onSubmitReview(offer.id, {review, rating});
+      dispatch(submitReview(offer.id, {review, rating}));
       setCommentForm({...commentForm, review: ``, rating: ``});
       formRef.current.reset();
     }
@@ -85,20 +86,4 @@ const ReviewForm = ({offer, onSubmitReview}) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmitReview(id, review) {
-    dispatch(submitReview(id, review));
-  }
-});
-
-const mapStateToProps = ({offer}) => ({
-  offer
-});
-
-ReviewForm.propTypes = {
-  offer: PropTypes.shape(offerProps).isRequired,
-  onSubmitReview: PropTypes.func.isRequired
-};
-
-export {ReviewForm};
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm);
+export default ReviewForm;

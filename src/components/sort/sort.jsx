@@ -1,11 +1,11 @@
 import React, {useRef} from 'react';
-import {connect} from 'react-redux';
-
-import {PropTypes} from 'prop-types';
+import {useDispatch, useSelector} from 'react-redux';
 import {changeSort} from '../../store/action';
-import {SortList} from '../../const';
+import {SortList, SortText} from '../../const';
 
-const Sort = ({onChangeSort, currentSort}) => {
+const Sort = () => {
+  const {currentSort} = useSelector((state) => state.MAIN);
+  const dispatch = useDispatch();
   const selectRef = useRef();
 
   const handleClickSelect = () => {
@@ -13,7 +13,7 @@ const Sort = ({onChangeSort, currentSort}) => {
   };
 
   const handleClickSortType = (evt) => {
-    onChangeSort(evt.currentTarget.dataset.sortType);
+    dispatch(changeSort(evt.currentTarget.dataset.sortType));
     selectRef.current.classList.remove(`places__options--opened`);
   };
 
@@ -25,7 +25,7 @@ const Sort = ({onChangeSort, currentSort}) => {
         tabIndex="0"
         onClick={handleClickSelect}
       >
-        {SortList.find(({type}) => (type === currentSort)).text}
+        {SortText[currentSort]}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref={`#icon-arrow-select`}></use>
         </svg>
@@ -49,20 +49,4 @@ const Sort = ({onChangeSort, currentSort}) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onChangeSort(currentSort) {
-    dispatch(changeSort(currentSort));
-  }
-});
-
-const mapStateToProps = (state) => ({
-  currentSort: state.currentSort
-});
-
-Sort.propTypes = {
-  onChangeSort: PropTypes.func.isRequired,
-  currentSort: PropTypes.string.isRequired
-};
-
-export {Sort};
-export default connect(mapStateToProps, mapDispatchToProps)(Sort);
+export default React.memo(Sort);

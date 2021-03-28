@@ -1,12 +1,14 @@
 import React from 'react';
 import {cities} from '../../const';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {changeCity} from '../../store/action';
-import {PropTypes} from 'prop-types';
 
-const Locations = ({onChangeCity, city}) => {
+const Locations = () => {
+  const {city} = useSelector((state) => state.MAIN);
+  const dispatch = useDispatch();
+
   const handleClickTabs = (currentCity) => {
-    onChangeCity(currentCity);
+    dispatch(changeCity(currentCity));
   };
 
   return (
@@ -22,20 +24,4 @@ const Locations = ({onChangeCity, city}) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onChangeCity(city) {
-    dispatch(changeCity(city));
-  }
-});
-
-const mapStateToProps = ({city}) => ({
-  city
-});
-
-Locations.propTypes = {
-  onChangeCity: PropTypes.func.isRequired,
-  city: PropTypes.string.isRequired
-};
-
-export {Locations};
-export default connect(mapStateToProps, mapDispatchToProps)(Locations);
+export default React.memo(Locations);
