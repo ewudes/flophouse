@@ -3,6 +3,7 @@ import {PropTypes} from 'prop-types';
 import Header from '../../components/header/header';
 import {login} from '../../store/api-actions';
 import {connect} from 'react-redux';
+import ErrorMessage from '../../components/error-message/error-message';
 
 const Login = ({
   city,
@@ -29,6 +30,7 @@ const Login = ({
 
   return (
     <div className="page page--gray page--login">
+      <ErrorMessage />
       <Header />
       <main className="page__main page__main--login">
         <div className="page__login-container container">
