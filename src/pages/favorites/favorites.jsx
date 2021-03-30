@@ -2,24 +2,22 @@ import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import Header from '../../components/header/header';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
-import PropTypes from 'prop-types';
-import {offerProps} from '../../components/prop-types/prop-types';
 import FavoritesItems from '../../components/favorites-items/favorites-items';
-import {cities, AppRoute} from '../../const';
-import {connect} from 'react-redux';
-import {changeCity} from '../../store/action';
+import {CITIES, AppRoute} from '../../const';
+import {useDispatch, useSelector} from 'react-redux';
 import {fetchFavorites} from './../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 import ErrorMessage from '../../components/error-message/error-message';
+import {getFavorites, checkFavoritesLoaded} from '../../store/selectors';
 
-const Favorites = ({
-  favorites,
-  isFavoritesLoaded,
-  setFavorites,
-}) => {
+const Favorites = () => {
+  const favorites = useSelector(getFavorites);
+  const isFavoritesLoaded = useSelector(checkFavoritesLoaded);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (!isFavoritesLoaded) {
-      setFavorites();
+      dispatch(fetchFavorites());
     }
   }, [isFavoritesLoaded]);
 
@@ -41,7 +39,7 @@ const Favorites = ({
                 <h1 className="favorites__title">Saved listing</h1>
                 <ul className="favorites__list">
 
-                  {cities.map((city, index) => {
+                  {CITIES.map((city, index) => {
                     const filtered = favorites.filter((offer) => offer.city.name === city && offer.isFavorite);
                     return filtered.length < 1 ? `` : <FavoritesItems city={city} offers={filtered} key={index} />;
                   })}
@@ -61,25 +59,4 @@ const Favorites = ({
   );
 };
 
-const mapStateToProps = ({DATA}) => ({
-  favorites: DATA.favorites,
-  isFavoritesLoaded: DATA.isFavoritesLoaded,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  changeCity(city) {
-    dispatch(changeCity(city));
-  },
-  setFavorites() {
-    dispatch(fetchFavorites());
-  }
-});
-
-Favorites.propTypes = {
-  favorites: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape(offerProps)), PropTypes.array]).isRequired,
-  isFavoritesLoaded: PropTypes.bool.isRequired,
-  setFavorites: PropTypes.func.isRequired
-};
-
-export {Favorites};
-export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
+export default Favorites;

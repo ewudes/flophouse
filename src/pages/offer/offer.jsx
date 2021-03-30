@@ -10,13 +10,16 @@ import {fetchOfferData, onToggleFavorite} from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 import {isAuthorized} from '../../utils';
 import ErrorMessage from '../../components/error-message/error-message';
+import {getCity, getAuthorizationStatus, getOffer, getNearbyOffers, getReviews} from '../../store/selectors';
 
 const FACTOR = 20;
 
 const Offer = () => {
-  const {authorizationStatus} = useSelector((state) => state.USER);
-  const {city} = useSelector((state) => state.MAIN);
-  const {offer, nearbyOffers, reviews} = useSelector((state) => state.DATA);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const city = useSelector(getCity);
+  const offer = useSelector(getOffer);
+  const nearbyOffers = useSelector(getNearbyOffers);
+  const reviews = useSelector(getReviews);
   const dispatch = useDispatch();
   const match = useRouteMatch();
   const pathId = match.params.id;

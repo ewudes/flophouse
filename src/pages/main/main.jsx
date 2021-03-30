@@ -9,10 +9,11 @@ import {fetchOfferList} from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 import ErrorMessage from '../../components/error-message/error-message';
 import {setActivePin, setOffer} from '../../store/action';
+import {getCity, checkDataLoaded} from '../../store/selectors';
 
 const Main = () => {
-  const {city} = useSelector((state) => state.MAIN);
-  const {isDataLoaded} = useSelector((state) => state.DATA);
+  const city = useSelector(getCity);
+  const isDataLoaded = useSelector(checkDataLoaded);
   const dispatch = useDispatch();
   const currentOffers = useSelector(filterOffersByCity);
   const sortedOffers = useSelector(sortOffers);

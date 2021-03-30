@@ -2,6 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
+import {getActiveOffer, getOffer} from '../../store/selectors';
 
 import "leaflet/dist/leaflet.css";
 
@@ -15,8 +16,8 @@ const Map = ({points, city, cardOption}) => {
   }
 
   const mapRef = useRef();
-  const {activeOffer} = useSelector((state) => state.MAIN);
-  const {offer} = useSelector((state) => state.DATA);
+  const activeOffer = useSelector(getActiveOffer);
+  const offer = useSelector(getOffer);
 
   const cityLocation = points[0].city.location;
 

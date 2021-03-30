@@ -5,13 +5,14 @@ import Map from '../map/map';
 import {offerProps} from '../prop-types/prop-types';
 import {useSelector} from 'react-redux';
 import Sort from '../sort/sort';
+import {checkDataLoaded} from '../../store/selectors';
 
 const OfferList = ({
   currentOffers,
   sortedOffers,
   city,
 }) => {
-  const {isDataLoaded} = useSelector((state) => state.DATA);
+  const isDataLoaded = useSelector(checkDataLoaded);
 
   const citiesPlacesRef = useRef();
 

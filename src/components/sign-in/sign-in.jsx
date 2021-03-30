@@ -2,9 +2,12 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {AuthorizationStatus, AppRoute} from '../../const';
+import {getAuthorizationStatus, getUserName, getAvatarUrl} from '../../store/selectors';
 
 const SignIn = () => {
-  const {authorizationStatus, userName, avatarUrl} = useSelector((state) => state.USER);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const userName = useSelector(getUserName);
+  const avatarUrl = useSelector(getAvatarUrl);
 
   return authorizationStatus === AuthorizationStatus.AUTH ?
     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>

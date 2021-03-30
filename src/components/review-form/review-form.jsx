@@ -3,9 +3,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {submitReview} from '../../store/api-actions';
 import {setLoadingReviewStatus} from '../../store/action';
 import {ReviewLoadingStatus, ReviewСharacters} from '../../const';
+import {getOffer, getReviewLoadingStatus} from '../../store/selectors';
 
 const ReviewForm = () => {
-  const {offer, reviewLoadingStatus} = useSelector((state) => state.DATA);
+  const offer = useSelector(getOffer);
+  const reviewLoadingStatus = useSelector(getReviewLoadingStatus);
   const dispatch = useDispatch();
 
   const {MAX_LENGTH: maxLength, MIN_LENGTH: minLength} = ReviewСharacters;

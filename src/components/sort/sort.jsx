@@ -2,9 +2,10 @@ import React, {useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeSort} from '../../store/action';
 import {SortList, SortText} from '../../const';
+import {getSort} from '../../store/selectors';
 
 const Sort = () => {
-  const {currentSort} = useSelector((state) => state.MAIN);
+  const currentSort = useSelector(getSort);
   const dispatch = useDispatch();
   const selectRef = useRef();
 
