@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {offerProps} from '../prop-types/prop-types';
-import {ActionCreator} from '../../store/action';
-import {connect} from 'react-redux';
-import {toggleFavorite} from '../../store/api-actions';
+import {setActivePin, deleteActivePin} from '../../store/action';
+import {useDispatch} from 'react-redux';
+import {onToggleFavorite} from '../../store/api-actions';
 
 const FACTOR = 20;
 
@@ -47,23 +47,26 @@ const Offer = ({
   type,
   cardOption,
   id,
-  setActivePin,
-  deleteActivePin,
-  onFavorite,
 }) => {
+  const dispatch = useDispatch();
+
   const cardType = CARD_TYPES[cardOption];
 
   const handleMouseOver = () => {
-    setActivePin(id);
+    if (cardOption !== `offer`) {
+      dispatch(setActivePin(id));
+    }
   };
 
   const handleMouseLeave = () => {
-    deleteActivePin();
+    if (cardOption !== `offer`) {
+      dispatch(deleteActivePin());
+    }
   };
 
   const handleFavoriteClick = () => {
     const newStatus = Number(!isFavorite);
-    onFavorite(id, newStatus);
+    dispatch(onToggleFavorite(id, newStatus));
   };
 
   return (
@@ -97,7 +100,8 @@ const Offer = ({
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: FACTOR * rating + `%`}}></span>
+            <span style={{width: FACTOR * Math.round(rating) + `%`}}></span>
+
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -110,19 +114,6 @@ const Offer = ({
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  setActivePin(id) {
-    dispatch(ActionCreator.setActivePin(id));
-  },
-  deleteActivePin() {
-    dispatch(ActionCreator.deleteActivePin());
-  },
-  onFavorite(id, isFavorite) {
-    dispatch(toggleFavorite(id, isFavorite));
-  },
-});
-
 Offer.propTypes = {...offerProps};
 
-export {Offer};
-export default connect(null, mapDispatchToProps)(Offer);
+export default React.memo(Offer);

@@ -1,32 +1,68 @@
-import React, {useState, useRef} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import React, {useState, useRef, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {submitReview} from '../../store/api-actions';
-import {offerProps} from '../prop-types/prop-types';
+import {setLoadingReviewStatus} from '../../store/action';
+import {ReviewLoadingStatus, ReviewСharacters} from '../../const';
+import {getOffer, getReviewLoadingStatus} from '../../store/selectors';
 
-const ReviewForm = ({offer, onSubmitReview}) => {
-  const [commentForm, setCommentForm] = useState({
+const ReviewForm = () => {
+  const offer = useSelector(getOffer);
+  const reviewLoadingStatus = useSelector(getReviewLoadingStatus);
+  const dispatch = useDispatch();
+
+  const {MAX_LENGTH: maxLength, MIN_LENGTH: minLength} = ReviewСharacters;
+
+  const [reviewForm, setReviewForm] = useState({
     review: ``,
     rating: ``
   });
 
-  const {review, rating} = commentForm;
+  const {review, rating} = reviewForm;
 
   const formRef = useRef();
+  const submitButtonRef = useRef();
+  const reviewRef = useRef();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    if (commentForm) {
-      onSubmitReview(offer.id, {review, rating});
-      setCommentForm({...commentForm, review: ``, rating: ``});
-      formRef.current.reset();
+    if (reviewForm) {
+      dispatch(submitReview(offer.id, {review, rating}));
+      setReviewForm({...reviewForm, review: ``, rating: ``});
+      dispatch(setLoadingReviewStatus(ReviewLoadingStatus.LOADING));
     }
   };
 
   const handleChange = (evt) => {
     const {name, value} = evt.target;
-    setCommentForm({...commentForm, [name]: value});
+    setReviewForm({...reviewForm, [name]: value});
   };
+
+  useEffect(() => {
+    submitButtonRef.current.disabled = !(rating && review.length > minLength && review.length < maxLength);
+  }, [review, rating]);
+
+  useEffect(() => {
+    switch (reviewLoadingStatus) {
+      case ReviewLoadingStatus.LOADING:
+        submitButtonRef.current.disabled = true;
+        reviewRef.current.disabled = true;
+        break;
+
+      case ReviewLoadingStatus.LOADED:
+        reviewRef.current.disabled = false;
+        formRef.current.reset();
+
+        setReviewForm({review: ``, rating: 0});
+        dispatch(setLoadingReviewStatus(``));
+        break;
+
+      case ReviewLoadingStatus.LOADING_FAILED:
+        submitButtonRef.current.disabled = false;
+        reviewRef.current.disabled = false;
+        dispatch(setLoadingReviewStatus(``));
+        break;
+    }
+  }, [reviewLoadingStatus]);
 
   return (
     <form
@@ -74,31 +110,25 @@ const ReviewForm = ({offer, onSubmitReview}) => {
           </svg>
         </label>
       </div>
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
+      <textarea
+        className="reviews__textarea form__textarea"
+        id="review"
+        name="review"
+        placeholder="Tell how was your stay, what you like and what can be improved"
+        defaultValue={``}
+        ref={reviewRef}
+        required
+        maxLength={maxLength}
+        minLength={minLength}
+      ></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled ref={submitButtonRef}>Submit</button>
       </div>
     </form>
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmitReview(id, review) {
-    dispatch(submitReview(id, review));
-  }
-});
-
-const mapStateToProps = ({offer}) => ({
-  offer
-});
-
-ReviewForm.propTypes = {
-  offer: PropTypes.shape(offerProps).isRequired,
-  onSubmitReview: PropTypes.func.isRequired
-};
-
-export {ReviewForm};
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm);
+export default ReviewForm;

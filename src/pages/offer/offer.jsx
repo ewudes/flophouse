@@ -1,44 +1,43 @@
 import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
 import {useRouteMatch} from 'react-router-dom';
 import Header from '../../components/header/header';
 import ReviewList from '../../components/reviews-list/reviews-list';
 import ReviewForm from '../../components/review-form/review-form';
 import NearPlaces from '../../components/near-places-list/near-places-list';
-import {offerProps, reviewProps} from '../../components/prop-types/prop-types';
 import Map from '../../components/map/map';
-import {connect} from "react-redux";
-import {fetchOfferData, toggleFavorite} from '../../store/api-actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchOfferData, onToggleFavorite} from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
-import {AuthorizationStatus} from '../../const';
+import {isAuthorized} from '../../utils';
+import ErrorMessage from '../../components/error-message/error-message';
+import {getCity, getAuthorizationStatus, getOffer, getNearbyOffers, getReviews} from '../../store/selectors';
 
 const FACTOR = 20;
 
-const Offer = ({
-  offer,
-  reviews,
-  city,
-  nearbyOffers,
-  setOfferData,
-  onFavorite,
-  authorizationStatus
-}) => {
+const Offer = () => {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const city = useSelector(getCity);
+  const offer = useSelector(getOffer);
+  const nearbyOffers = useSelector(getNearbyOffers);
+  const reviews = useSelector(getReviews);
+  const dispatch = useDispatch();
   const match = useRouteMatch();
-  const id = match.params.id;
+  const pathId = match.params.id;
 
   useEffect(() => {
-    if (String(offer.id) !== id) {
-      setOfferData(id);
+    if (String(offer.id) !== pathId) {
+      dispatch(fetchOfferData(pathId));
     }
-  }, [id]);
+  }, [pathId]);
 
-  if (String(offer.id) !== id) {
+  if (String(offer.id) !== pathId) {
     return (
       <Spinner />
     );
   }
 
   const {
+    id,
     images,
     isPremium,
     isFavorite,
@@ -55,12 +54,13 @@ const Offer = ({
 
   const handleClickFavorite = () => {
     const newStatus = Number(!isFavorite);
-    onFavorite(id, newStatus);
+    dispatch(onToggleFavorite(id, newStatus));
 
   };
 
   return (
     <div className="page">
+      <ErrorMessage/>
       <Header />
       <main className="page__main page__main--property">
         <section className="property">
@@ -93,7 +93,7 @@ const Offer = ({
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: FACTOR * rating + `%`}}></span>
+                  <span style={{width: FACTOR * Math.round(rating) + `%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
@@ -143,7 +143,7 @@ const Offer = ({
                 <ReviewList
                   reviews={reviews}
                 />
-                {authorizationStatus === AuthorizationStatus.AUTH && <ReviewForm/>}
+                {isAuthorized(authorizationStatus) && <ReviewForm/>}
               </section>
             </div>
           </div>
@@ -151,6 +151,7 @@ const Offer = ({
             <Map
               points={nearbyOffers}
               city={city}
+              cardOption={`offer`}
             />
           </section>
         </section>
@@ -166,32 +167,4 @@ const Offer = ({
   );
 };
 
-const mapStateToProps = ({city, reviews, offer, nearbyOffers, authorizationStatus}) => ({
-  offer,
-  city,
-  reviews,
-  nearbyOffers,
-  authorizationStatus
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  setOfferData(id) {
-    dispatch(fetchOfferData(id));
-  },
-  onFavorite(id, isFavorite) {
-    dispatch(toggleFavorite(id, isFavorite));
-  },
-});
-
-Offer.propTypes = {
-  offer: PropTypes.oneOfType([PropTypes.shape(offerProps), PropTypes.object]).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.shape(reviewProps)).isRequired,
-  city: PropTypes.string.isRequired,
-  setOfferData: PropTypes.func.isRequired,
-  nearbyOffers: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape(offerProps)), PropTypes.array]).isRequired,
-  onFavorite: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-};
-
-export {Offer};
-export default connect(mapStateToProps, mapDispatchToProps)(Offer);
+export default Offer;

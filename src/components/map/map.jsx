@@ -1,7 +1,8 @@
 import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {getActiveOffer, getOffer} from '../../store/selectors';
 
 import "leaflet/dist/leaflet.css";
 
@@ -9,12 +10,15 @@ const STYLE = {
   height: `100%`
 };
 
-const Map = ({points, city, activeOffer}) => {
+const Map = ({points, city, cardOption}) => {
   if (!points.length) {
     return null;
   }
 
   const mapRef = useRef();
+  const activeOffer = useSelector(getActiveOffer);
+  const offer = useSelector(getOffer);
+
   const cityLocation = points[0].city.location;
 
   useEffect(() => {
@@ -42,35 +46,57 @@ const Map = ({points, city, activeOffer}) => {
     const pins = [];
     points.forEach((point) => {
       const customIcon = leaflet.icon({
-        iconUrl: `${activeOffer !== point.id ? `./img/pin.svg` : `./img/pin-active.svg`}`,
+        iconUrl: activeOffer === point.id ? `./img/pin-active.svg` : `./img/pin.svg`,
         iconSize: [27, 39]
       });
 
-      leaflet.marker({
-        lat: point.location.latitude,
-        lng: point.location.longitude
-      },
-      {
-        icon: customIcon
-      })
-      .addTo(mapRef.current)
-      .bindPopup(point.title);
+      pins.push(
+          leaflet.marker({
+            lat: point.location.latitude,
+            lng: point.location.longitude
+          },
+          {
+            icon: customIcon
+          })
+        .addTo(mapRef.current)
+        .bindPopup(point.title)
+      );
     });
-    const pinsGroup = leaflet.layerGroup(pins);
-    mapRef.current.addLayer(pinsGroup);
+
     return () => {
-      pinsGroup.clearLayers();
+      pins.forEach((marker) => mapRef.current.removeLayer(marker));
     };
   }, [activeOffer, points]);
+
+  useEffect(() => {
+    let pin;
+    if (offer.id) {
+      const icon = leaflet.icon({
+        iconUrl: `img/pin-active.svg`,
+        iconSize: [27, 39]
+      });
+
+      pin = leaflet.marker({
+        lat: offer.location.latitude,
+        lng: offer.location.longitude
+      }, {
+        icon
+      })
+      .addTo(mapRef.current)
+      .bindPopup(offer.title);
+    }
+
+    return () => {
+      if (cardOption === `offer`) {
+        mapRef.current.removeLayer(pin);
+      }
+    };
+  }, [cardOption, offer]);
 
   return (
     <div id="map" style={STYLE} ref={mapRef}></div>
   );
 };
-
-const mapStateToProps = ({activeOffer}) => ({
-  activeOffer
-});
 
 Map.propTypes = {
   points: PropTypes.arrayOf(PropTypes.shape({
@@ -80,8 +106,7 @@ Map.propTypes = {
     city: PropTypes.objectOf.isRequired,
   })),
   city: PropTypes.string.isRequired,
-  activeOffer: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired
+  cardOption: PropTypes.string.isRequired
 };
 
-export {Map};
-export default connect(mapStateToProps, null)(Map);
+export default Map;

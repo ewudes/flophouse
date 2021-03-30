@@ -1,30 +1,37 @@
 export const CITIES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];
 
-export const avatar = `../img/avatar.svg`;
+export const AVATAR = `../img/avatar.svg`;
 
-export const SORT_TYPES = {
+export const SortType = {
   POPULAR: `popular`,
   LOW_PRICE: `low-price`,
   HIGH_PRICE: `high-price`,
   TOP_RATED: `top-rated`
 };
 
-export const SORT_LIST = [
+export const SortText = {
+  [SortType.POPULAR]: `Popular`,
+  [SortType.LOW_PRICE]: `Price: low to high`,
+  [SortType.HIGH_PRICE]: `Price: high to low`,
+  [SortType.TOP_RATED]: `Top rated first`,
+};
+
+export const SortList = [
   {
-    text: `Popular`,
-    type: SORT_TYPES.POPULAR
+    text: SortText[SortType.POPULAR],
+    type: SortType.POPULAR
   },
   {
-    text: `Price: low to high`,
-    type: SORT_TYPES.LOW_PRICE
+    text: SortText[SortType.LOW_PRICE],
+    type: SortType.LOW_PRICE
   },
   {
-    text: `Price: high to low`,
-    type: SORT_TYPES.HIGH_PRICE
+    text: SortText[SortType.HIGH_PRICE],
+    type: SortType.HIGH_PRICE
   },
   {
-    text: `Top rated first`,
-    type: SORT_TYPES.TOP_RATED
+    text: SortText[SortType.TOP_RATED],
+    type: SortType.TOP_RATED
   },
 ];
 
@@ -41,6 +48,7 @@ export const ApiRoute = {
   FAVORITES: `/favorite`,
   COMMENTS: `/comments`,
   LOGIN: `/login`,
+  LOGOUT: `/logout`,
 };
 
 export const AuthorizationStatus = {
@@ -48,13 +56,24 @@ export const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`
 };
 
-export const HTTP_CODE = {
+export const HttpCode = {
   UNAUTHORIZED: 401,
   NOT_FOUND: 404
 };
 
-export const LOCAL_STORE_KEYS = {
+export const StoreKey = {
   AUTH: `authorizationStatus`,
   EMAIL: `email`,
   AVATAR_URL: `avatarUrl`
+};
+
+export const ReviewСharacters = {
+  MAX_LENGTH: 300,
+  MIN_LENGTH: 50
+};
+
+export const ReviewLoadingStatus = {
+  LOADED: `loaded`,
+  LOADING: `loading`,
+  LOADING_FAILED: `loadingFailed`
 };
