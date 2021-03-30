@@ -4,7 +4,7 @@ import Locations from '../../components/locations/locations';
 import OfferList from '../../components/offer-list/offer-list';
 import OfferEmpty from '../../components/offer-empty/offer-empty';
 import {useDispatch, useSelector} from 'react-redux';
-import {filterOffersByCity, sortOffers} from '../../utils';
+import {filterOffersByCity, sortOffers} from '../../store/selectors';
 import {fetchOfferList} from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 import ErrorMessage from '../../components/error-message/error-message';

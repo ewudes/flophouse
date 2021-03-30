@@ -13,7 +13,7 @@ import {
   removeFavorites,
   setErrorMessage,
   setLoadingReviewStatus,
-} from "./action";
+} from './action';
 import {
   AuthorizationStatus,
   ApiRoute,
@@ -22,8 +22,8 @@ import {
   AVATAR,
   ReviewLoadingStatus,
 } from './../const';
-import {adaptOfferToClient, adaptReviewsToClient} from "./adapters";
-import {sortOffers, compareDates} from "../utils";
+import {adaptOfferToClient, adaptReviewsToClient} from './adapters';
+import {compareDates} from '../utils';
 
 export const fetchOfferList = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.HOTELS)
@@ -50,7 +50,7 @@ export const fetchOfferData = (id) => (dispatch, _getState, api) => (
     api.get(`${ApiRoute.COMMENTS}/${id}`)
   ])
     .then(([offer, nearby, comments]) => {
-      const sortedComments = comments.data.sort(sortOffers);
+      const sortedComments = comments.data.sort(compareDates);
       dispatch(setOffer(adaptOfferToClient(offer.data)));
       dispatch(setNearbyOffers(nearby.data.map((nearbyOffer) => adaptOfferToClient(nearbyOffer))));
       dispatch(setReviews(sortedComments.map((comment) => adaptReviewsToClient(comment))));
