@@ -48,6 +48,7 @@ export const ApiRoute = {
   FAVORITES: `/favorite`,
   COMMENTS: `/comments`,
   LOGIN: `/login`,
+  LOGOUT: `/logout`,
 };
 
 export const AuthorizationStatus = {

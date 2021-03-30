@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
-import {PropTypes} from 'prop-types';
 import Header from '../../components/header/header';
 import {login} from '../../store/api-actions';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import ErrorMessage from '../../components/error-message/error-message';
+import {getCity} from '../../store/selectors';
 
-const Login = ({
-  city,
-  formSubmit
-}) => {
+const Login = () => {
+  const city = useSelector(getCity);
+  const dispatch = useDispatch();
+
   const [credentials, setСredentials] = useState({
     email: ``,
     userPassword: ``
@@ -22,10 +22,10 @@ const Login = ({
   const formSubmitHandler = (evt) => {
     evt.preventDefault();
 
-    formSubmit({
+    dispatch(login({
       login: credentials.email,
       password: credentials.password,
-    });
+    }));
   };
 
   return (
@@ -61,20 +61,4 @@ const Login = ({
   );
 };
 
-const mapStateToProps = ({MAIN}) => ({
-  city: MAIN.city,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  formSubmit(AuthInfo) {
-    dispatch(login(AuthInfo));
-  }
-});
-
-Login.propTypes = {
-  city: PropTypes.string.isRequired,
-  formSubmit: PropTypes.func.isRequired,
-};
-
-export {Login};
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

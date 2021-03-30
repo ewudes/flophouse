@@ -94,6 +94,11 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     })
 );
 
+export const logout = () => (dispatch, _getState, api) => {
+  return api.get(ApiRoute.LOGOUT)
+    .then(() => dispatch(requiredAuthorization(AuthorizationStatus.NO_AUTH)));
+};
+
 export const fetchFavorites = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.FAVORITES)
   .then(({data}) => dispatch(setFavorites(data.map((offer)=> adaptOfferToClient(offer)))))
