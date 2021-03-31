@@ -45,53 +45,31 @@ const Map = ({points, city, cardOption}) => {
   useEffect(() => {
     const pins = [];
     points.forEach((point) => {
+      const isActiveOffer = activeOffer === point.id ? `./img/pin-active.svg` : `./img/pin.svg`;
+      const isOpenedOffer = offer.id === point.id ? `./img/pin-active.svg` : `./img/pin.svg`;
+
       const customIcon = leaflet.icon({
-        iconUrl: activeOffer === point.id ? `./img/pin-active.svg` : `./img/pin.svg`,
+        iconUrl: cardOption === `offer` ? isOpenedOffer : isActiveOffer,
         iconSize: [27, 39]
       });
 
-      pins.push(
-          leaflet.marker({
-            lat: point.location.latitude,
-            lng: point.location.longitude
-          },
-          {
-            icon: customIcon
-          })
-        .addTo(mapRef.current)
-        .bindPopup(point.title)
-      );
-    });
-
-    return () => {
-      pins.forEach((marker) => mapRef.current.removeLayer(marker));
-    };
-  }, [activeOffer, points]);
-
-  useEffect(() => {
-    let pin;
-    if (offer.id) {
-      const icon = leaflet.icon({
-        iconUrl: `img/pin-active.svg`,
-        iconSize: [27, 39]
-      });
-
-      pin = leaflet.marker({
-        lat: offer.location.latitude,
-        lng: offer.location.longitude
-      }, {
-        icon
+      const pin = leaflet.marker({
+        lat: point.location.latitude,
+        lng: point.location.longitude
+      },
+      {
+        icon: customIcon
       })
-      .addTo(mapRef.current)
-      .bindPopup(offer.title);
-    }
+      .bindPopup(point.title);
 
+      pins.push(pin);
+    });
+    const pinsGroup = leaflet.layerGroup(pins);
+    mapRef.current.addLayer(pinsGroup);
     return () => {
-      if (cardOption === `offer`) {
-        mapRef.current.removeLayer(pin);
-      }
+      pinsGroup.clearLayers();
     };
-  }, [cardOption, offer]);
+  }, [activeOffer, city, points]);
 
   return (
     <div id="map" style={STYLE} ref={mapRef}></div>

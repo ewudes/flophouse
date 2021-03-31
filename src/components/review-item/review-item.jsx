@@ -1,5 +1,6 @@
 import React from 'react';
 import {reviewProps} from '../prop-types/prop-types';
+import dayjs from 'dayjs';
 
 const FACTOR = 20;
 
@@ -24,7 +25,7 @@ const ReviewItem = ({comment, date, rating, user}) => {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime={date}>{new Date(date).toLocaleDateString({month: `long`, day: `numeric`})}</time>
+        <time className="reviews__time" dateTime={date}>{dayjs(date).format(`MMMM YYYY`)}</time>
       </div>
     </li>
   );
