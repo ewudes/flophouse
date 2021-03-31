@@ -9,6 +9,7 @@ import {fetchFavorites} from './../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 import ErrorMessage from '../../components/error-message/error-message';
 import {getFavorites, checkFavoritesLoaded} from '../../store/selectors';
+import './favorites.css';
 
 const Favorites = () => {
   const favorites = useSelector(getFavorites);
@@ -27,27 +28,21 @@ const Favorites = () => {
     );
   }
 
-  return (
-    <div className="page">
+  return favorites.length ?
+    <div className="page page--favorites">
       <ErrorMessage/>
       <Header/>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          {
-            favorites.length ?
-              <section className="favorites">
-                <h1 className="favorites__title">Saved listing</h1>
-                <ul className="favorites__list">
-
-                  {CITIES.map((city, index) => {
-                    const filtered = favorites.filter((offer) => offer.city.name === city && offer.isFavorite);
-                    return filtered.length < 1 ? `` : <FavoritesItems city={city} offers={filtered} key={index} />;
-                  })}
-
-                </ul>
-              </section>
-              : <FavoritesEmpty/>
-          }
+          <section className="favorites">
+            <h1 className="favorites__title">Saved listing</h1>
+            <ul className="favorites__list">
+              {CITIES.map((city, index) => {
+                const filtered = favorites.filter((offer) => offer.city.name === city && offer.isFavorite);
+                return filtered.length < 1 ? `` : <FavoritesItems city={city} offers={filtered} key={index} />;
+              })}
+            </ul>
+          </section>
         </div>
       </main>
       <footer className="footer container">
@@ -55,8 +50,8 @@ const Favorites = () => {
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
         </Link>
       </footer>
-    </div>
-  );
+    </div> :
+    <FavoritesEmpty />;
 };
 
 export default Favorites;
