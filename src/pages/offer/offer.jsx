@@ -149,7 +149,7 @@ const Offer = () => {
           </div>
           <section className="property__map map">
             <Map
-              points={nearbyOffers}
+              points={[...nearbyOffers, offer]}
               city={city}
               cardOption={`offer`}
             />
