@@ -85,7 +85,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
   api.post(ApiRoute.LOGIN, {email, password})
     .then(({data}) => {
       dispatch(requiredAuthorization(AuthorizationStatus.AUTH));
-      dispatch(changeUserName(email));
+      dispatch(changeUserName(data.email));
       dispatch(changeUserAvatar(data[`avatar_url`]));
       dispatch(redirectToRoute(AppRoute.MAIN));
     })
