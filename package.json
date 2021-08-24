@@ -9,7 +9,7 @@
     "start": "webpack-dev-server",
     "eslint": "eslint --ext .jsx --ext .js src/",
     "test": "npm run eslint",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d public"
   },
   "devDependencies": {
     "@babel/core": "7.12.13",
