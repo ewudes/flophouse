@@ -1,0 +1,15 @@
+.errorMesage {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  bottom: 18px;
+  right: 40px;
+  border-radius: 7px;
+  width: 300px;
+  height: 42px;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px 6px rgba(255,16,16,0.34);
+  z-index: 9999;
+}
