@@ -1,6 +1,5 @@
 {
   "name": "six-cities",
-  "homepage": "https://ewudes.github.io/ha-sixCities/",
   "version": "1.0.0",
   "scripts": {
     "build": "webpack --mode production",
@@ -9,6 +8,14 @@
     "test": "npm run eslint",
     "deploy": "gh-pages -d public"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ewudes/ha-sixCities.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ewudes/ha-sixCities/issues"
+  },
+  "homepage": "https://github.com/ewudes/ha-sixCities#readme",
   "devDependencies": {
     "@babel/core": "7.12.13",
     "@babel/preset-env": "7.12.13",
