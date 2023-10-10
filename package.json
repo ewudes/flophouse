@@ -1,5 +1,5 @@
 {
-  "name": "six-cities",
+  "name": "buuking",
   "version": "1.0.0",
   "scripts": {
     "build": "webpack --mode production",
@@ -10,12 +10,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ewudes/ha-sixCities.git"
+    "url": "git+https://github.com/ewudes/buuking.git"
   },
   "bugs": {
-    "url": "https://github.com/ewudes/ha-sixCities/issues"
+    "url": "https://github.com/ewudes/buuking/issues"
   },
-  "homepage": "https://github.com/ewudes/ha-sixCities#readme",
+  "homepage": "https://github.com/ewudes/buuking#readme",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^0.21.4",
