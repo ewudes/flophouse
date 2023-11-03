@@ -1,5 +1,5 @@
 {
-  "name": "buuking",
+  "name": "flophouse",
   "version": "1.0.0",
   "scripts": {
     "build": "webpack --mode production",
@@ -10,12 +10,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ewudes/buuking.git"
+    "url": "git+https://github.com/ewudes/flophouse.git"
   },
   "bugs": {
-    "url": "https://github.com/ewudes/buuking/issues"
+    "url": "https://github.com/ewudes/flophouse/issues"
   },
-  "homepage": "https://github.com/ewudes/buuking#readme",
+  "homepage": "https://github.com/ewudes/flophouse#readme",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^0.21.4",
