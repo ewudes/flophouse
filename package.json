@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --open",
+    "dev": "webpack-dev-server --open",
     "eslint": "eslint --ext .jsx --ext .js src/",
     "test": "npm run eslint",
     "deploy": "gh-pages -d public"
