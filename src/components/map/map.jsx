@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {getActiveOffer, getOffer} from '../../store/selectors';
 
-import "leaflet/dist/leaflet.css";
+import 'leaflet/dist/leaflet.css';
 
 const STYLE = {
   height: `100%`
