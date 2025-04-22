@@ -18,7 +18,7 @@
   "homepage": "https://github.com/ewudes/flophouse#readme",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
-    "axios": "^1.7.4",
+    "axios": "^1.8.2",
     "dayjs": "1.10.4",
     "gh-pages": "^5.0.0",
     "history": "4.10.1",
