@@ -1,6 +1,7 @@
 {
   "name": "flophouse",
   "version": "1.0.0",
+  "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack-dev-server --open",
