@@ -29,15 +29,21 @@ export const fetchOfferList = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.HOTELS)
   .then(({data}) => dispatch(loadOffers(data.map((offer)=> adaptOfferToClient(offer)))))
   .catch((err) => {
-    const {response} = err;
-    switch (response.status) {
+    const status = err.response.status;
+
+    if (!status) {
+      dispatch(setErrorMessage(`Unknown error`));
+      return;
+    }
+
+    switch (status) {
       case HttpCode.UNAUTHORIZED:
         dispatch(redirectToRoute(AppRoute.LOGIN));
         dispatch(changeUserAvatar(AVATAR));
         break;
 
       default:
-        dispatch(setErrorMessage(response.status));
+        dispatch(setErrorMessage(status));
         break;
     }
   })
@@ -56,17 +62,25 @@ export const fetchOfferData = (id) => (dispatch, _getState, api) => (
       dispatch(setReviews(sortedComments.map((comment) => adaptReviewsToClient(comment))));
     })
     .catch((err) => {
-      const {response} = err;
-      switch (response.status) {
-        case HttpCode.NOT_FOUND:
-          dispatch(redirectToRoute(AppRoute.NOT_FOUND));
+      const status = err.response.status;
+
+      if (!status) {
+        dispatch(setErrorMessage(`Unknown error`));
+        return;
+      }
+
+      switch (status) {
+        case HttpCode.UNAUTHORIZED:
+          dispatch(redirectToRoute(AppRoute.LOGIN));
+          dispatch(changeUserAvatar(AVATAR));
           break;
 
         default:
-          dispatch(setErrorMessage(response.status));
+          dispatch(setErrorMessage(status));
           break;
       }
     })
+
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => {
