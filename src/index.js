@@ -1,23 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import App from './components/app/app';
 import rootReducer from './store/root-reducer';
-import { createApi } from './services/api';
-import { requiredAuthorization } from './store/action';
-import { AuthorizationStatus } from './const';
-import { checkAuth } from './store/api-actions';
-import { redirect } from './store/middlewares/redirect';
-import { configureStore } from '@reduxjs/toolkit';
+import {createApi} from './services/api';
+import {requiredAuthorization} from './store/action';
+import {AuthorizationStatus} from './const';
+import {checkAuth} from './store/api-actions';
+import {redirect} from './store/middlewares/redirect';
+import {configureStore} from '@reduxjs/toolkit';
+import {worker} from './mocks/browser';
+const dotenv = require(`dotenv`);
 
 async function start() {
-  if (process.env.NODE_ENV === 'development') {
-    const { worker } = await import('./mocks/browser');
+  if (dotenv.env.NODE_ENV === `development`) {
     await worker.start();
   }
 
   const api = createApi(
-    () => store.dispatch(requiredAuthorization(AuthorizationStatus.NO_AUTH))
+      () => store.dispatch(requiredAuthorization(AuthorizationStatus.NO_AUTH))
   );
 
   const store = configureStore({
@@ -32,10 +33,10 @@ async function start() {
 
   store.dispatch(checkAuth()).finally(() => {
     ReactDOM.render(
-      <Provider store={store}>
-        <App />
-      </Provider>,
-      document.querySelector('#root')
+        <Provider store={store}>
+          <App />
+        </Provider>,
+        document.querySelector(`#root`)
     );
   });
 }
